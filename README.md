@@ -19,7 +19,7 @@ together fine-tuning create --training-file $TRAIN_FILE_ID --model $MODEL_NAME -
 
 ### TODOs
 1. Increase coverage of Llama results on medsum data
-   - For 1 epoch (if you're being careful about data exposure) or epochs to convergence (maybe 5 epochs? however many we need)
+   - For 1 epoch (if you're being careful about data exposure) or epochs to convergence (maybe 10 epochs? however many we need)
    - For 1 vs. multiple shadow models (just get results for 10 shadow models)
    - For 1 vs. multiple world models / different world model strategies
    - With prompt (2 types) / without prompt (e.g. do we need?)
