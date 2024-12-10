@@ -28,6 +28,6 @@ for SUFFIX in "$@"; do
     --model "$MODEL" \
     --wandb-api-key "6243f6febde392b2ca8109041f9a9680a5d17993" \
     --validation-file "$VAL_FILE_ID" \
-    --n-epochs 4 \
-    --n-evals 4
+    --n-epochs 5 \
+    --n-evals 5
 done
