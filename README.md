@@ -22,6 +22,7 @@ together fine-tuning create --training-file $TRAIN_FILE_ID --model $MODEL_NAME -
    - For 1, 4, 8 epochs finetuning (?)
    - For 1 vs. multiple shadow models (just get results for 10 shadow models)
    - For 1 vs. multiple world models / different world model strategies
+   - With prompt (2 types) / without prompt (e.g. do we need?)
 
 2. Once, Llama results are more complete, run on
    - Gemini (?)
