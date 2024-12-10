@@ -16,3 +16,22 @@ together files upload PATH_TO_VAL_FILE
 
 together fine-tuning create --training-file $TRAIN_FILE_ID --model $MODEL_NAME --wandb-api-key $WANDB_API_KEY --validation-file $VAL_FILE_ID
 ```
+
+### TODOs
+1. Increase coverage of Llama results on medsum data
+   - For 1, 4, 8 epochs finetuning (?)
+   - For 1 vs. multiple shadow models (just get results for 10 shadow models)
+   - For 1 vs. multiple world models / different world model strategies
+
+2. Once, Llama results are more complete, run on
+   - Gemini (?)
+   - mixtral_8x7b (?)
+   - OpenAI (?) (if possible, expensive ? )
+
+3. Finalize experiments (can do in parallel using current data)
+   - Compare the naive attack with our score with learned model
+   - Make probability observation
+
+4. Probably need new datasets
+   - Similar medical setting dataset (?)
+   - Something synthetic (with very rare tokens) (?)

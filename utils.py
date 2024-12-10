@@ -1,6 +1,15 @@
 import numpy as np
 import pandas as pd
 from sklearn.metrics import roc_curve, auc
+from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig, AutoModel
+
+# f"consider someone with the following conditions: {', '.join(remaining_ents)}. the individual then also has the condition "
+PROMPT_TEMPLATE = {
+    0: ["consider someone with the following conditions: ", ". the individual then also has the condition "],
+    1: ["consider an individual whose medical note contains the following: ", ". that individual's medical note would also include: "],
+}
+
+PROMPT_TO_USE = 0
 
 MODEL_DICT = {
     'llama_3_1': 'meta-llama/Meta-Llama-3.1-8B-Reference',
@@ -55,3 +64,81 @@ def auc_calculation(labels, probs):
     fpr,tpr, _ = roc_curve(labels, probs)
     roc_auc = auc(fpr,tpr)
     return roc_auc
+
+class GenerateNextTokenProbAPI:
+    def __init__(self, api_client, model_name):
+        self.api_client = api_client
+        self.model_name = model_name
+        self.tokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3-8B-Instruct')
+
+    def find_target_in_tokens(self, target_string, tokens):
+        print('finding target string in tokens')
+        reconstructed_text = ''.join(tokens).replace(' ', '').replace('Ġ', '')
+        target_string_no_spaces = target_string.replace(' ', '').replace('Ġ', '')
+
+        # pos of target string in the text
+        index_in_text = reconstructed_text.find(target_string_no_spaces)
+        if index_in_text == -1:
+            return None  # bad
+
+        # map char indices back to token indices
+        accumulated_length = 0
+        start_token_index = None
+        end_token_index = None
+        for i, tok in enumerate(tokens):
+            tok_no_space = tok.replace(' ', '').replace('Ġ', '')
+            tok_length = len(tok_no_space)
+            if accumulated_length <= index_in_text < accumulated_length + tok_length:
+                start_token_index = i
+            if accumulated_length < index_in_text + len(target_string_no_spaces) <= accumulated_length + tok_length:
+                end_token_index = i + 1
+                break
+            accumulated_length += tok_length
+
+        print('done')
+        if start_token_index is not None and end_token_index is not None:
+            return start_token_index, end_token_index
+        else:
+            return None
+
+    def get_next_token_prob(self, input_string, target_string):
+        messages = [
+            {"role": "system", "content": "You are a medical expert."},
+            {"role": "user", "content": input_string + " " + target_string}
+        ]
+
+        response = self.api_client.chat.completions.create(
+            model=self.model_name,
+            messages=messages,
+            max_tokens=0,
+            temperature=0,
+            logprobs=True,
+            echo=True
+        )
+        
+        tokens = response.prompt[0].logprobs.tokens
+        logprobs = response.prompt[0].logprobs.token_logprobs
+
+        indices = self.find_target_in_tokens(target_string, tokens)
+        if indices is None:
+            return -1
+
+        start_index, end_index = indices
+        logprobs_slice = logprobs[start_index:end_index]
+        prob_target_string = np.exp(sum(logprobs_slice))
+
+        return prob_target_string
+    
+
+def compute_token_probs_api(y_star_string, prompt, prob_generator):    
+    prob = prob_generator.get_next_token_prob(prompt, y_star_string)    
+    return prob
+
+def load_shadow_models_for_llama_3_instruct(model_dict, api_keys_subsample_ids):
+    shadow_models_tuples = []    
+    for api_key, id in api_keys_subsample_ids:
+        model_name = f"{model_dict['llama_3_instruct']}-{id}"
+        subsample_ids = pd.read_csv(f"formatted_data/subsample_ids_{id}.csv")
+        subsample_ids = subsample_ids['ID'].tolist()
+        shadow_models_tuples.append((api_key, model_name, subsample_ids))
+    return shadow_models_tuples
