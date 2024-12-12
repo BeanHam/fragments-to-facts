@@ -14,8 +14,8 @@ fi
 
 for SUFFIX in "$@"; do
   # extract the file ids from the json map
-  TRAIN_FILE_ID=$(jq -r '."data_formatted_train_'${SUFFIX}'.jsonl"' "$UPLOAD_MAP")
-  VAL_FILE_ID=$(jq -r '."data_formatted_val_'${SUFFIX}'.jsonl"' "$UPLOAD_MAP")
+  TRAIN_FILE_ID=$(jq -r '."data_formatted_shadow_train_'${SUFFIX}'.jsonl"' "$UPLOAD_MAP")
+  VAL_FILE_ID=$(jq -r '."data_formatted_shadow_val_'${SUFFIX}'.jsonl"' "$UPLOAD_MAP")
 
   if [ "$TRAIN_FILE_ID" = "null" ] || [ "$VAL_FILE_ID" = "null" ]; then
     echo "no matching train/val entries found for suffix $SUFFIX in $UPLOAD_MAP"
