@@ -24,15 +24,18 @@ together fine-tuning create --training-file $TRAIN_FILE_ID --model $MODEL_NAME -
    - For 1 vs. multiple world models / different world model strategies
    - With prompt (2 types) / without prompt (e.g. do we need?)
 
-2. Once, Llama results are more complete, run on
+2. Same results but with differentially private finetuning
+   - For 1 epoch vs 10, using the AWS instance. Just choose 2 shadow models.
+
+3. Once, Llama results are more complete, run on
    - Gemini (?)
    - mixtral_8x7b (?)
    - OpenAI (?) (if possible, expensive ? )
 
-3. Finalize experiments (can do in parallel using current data)
+4. Finalize experiments (can do in parallel using current data)
    - Compare the naive attack with our score with learned model
    - Make probability observation
 
-4. Probably need new datasets
+5. Probably need new datasets
    - Similar medical setting dataset (?)
    - Something synthetic (with very rare tokens) (?)
