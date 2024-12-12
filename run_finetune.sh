@@ -26,7 +26,7 @@ for SUFFIX in "$@"; do
   together fine-tuning create \
     --training-file "$TRAIN_FILE_ID" \
     --model "$MODEL" \
-    --wandb-api-key "6243f6febde392b2ca8109041f9a9680a5d17993" \
+    --wandb-api-key "a73070a2ae35aa73562604c69dfc697278d19086" \
     --validation-file "$VAL_FILE_ID" \
     --n-epochs 10 \
     --n-evals 10
