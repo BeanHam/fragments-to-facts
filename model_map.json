@@ -1,18 +1,4 @@
-{
-    "train_2":{
-        "job_id":"ft-2bed0972-8eac-485b-90d1-659047c2cd5a",
-        "model_id":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-2104a2dc",
-    },
-    "train_3":{
-         "job_id":"ft-2eb20b28-5b25-4a1a-8dd6-e0ad4d7a212b",
-         "model_id":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-afc89c2b"
-    },
-    "shadow_train_2":{
-        "job_id":"ft-5aa4ad3d-93f7-4ed7-970c-bf6bb7c84f10",
-        "model_id":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-9082d8a1"
-   },
-    "shadow_train_3":{
-        "job_id":"ft-3b900365-3e73-43b3-9e86-6b094634a7b3",
-        "model_id":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-507a0658"
-   }
-}
+{"train_2":{"job_id":"ft-2bed0972-8eac-485b-90d1-659047c2cd5a","model_id":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-2104a2dc"},
+ "train_3":{"job_id":"ft-2eb20b28-5b25-4a1a-8dd6-e0ad4d7a212b","model_id":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-afc89c2b"},
+ "shadow_train_2":{"job_id":"ft-5aa4ad3d-93f7-4ed7-970c-bf6bb7c84f10","model_id":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-9082d8a1"},
+ "shadow_train_3":{"job_id":"ft-3b900365-3e73-43b3-9e86-6b094634a7b3","model_id":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-507a0658"}}
