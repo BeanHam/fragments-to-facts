@@ -72,7 +72,7 @@ class GenerateNextTokenProbAPI:
         self.tokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3-8B-Instruct')
 
     def find_target_in_tokens(self, target_string, tokens):
-        print('finding target string in tokens')
+        #print('finding target string in tokens')
         reconstructed_text = ''.join(tokens).replace(' ', '').replace('Ġ', '')
         target_string_no_spaces = target_string.replace(' ', '').replace('Ġ', '')
 
@@ -95,7 +95,7 @@ class GenerateNextTokenProbAPI:
                 break
             accumulated_length += tok_length
 
-        print('done')
+        #print('done')
         if start_token_index is not None and end_token_index is not None:
             return start_token_index, end_token_index
         else:
