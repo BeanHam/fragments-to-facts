@@ -101,7 +101,7 @@ class GenerateNextTokenProbAPI:
         else:
             return None
 
-    def get_next_token_prob(self, input_string, target_string):
+    def get_next_token_prob(self, input_string, target_string, max_tokens):
         messages = [
             {"role": "system", "content": "You are a medical expert."},
             {"role": "user", "content": input_string + " " + target_string}
@@ -110,7 +110,7 @@ class GenerateNextTokenProbAPI:
         response = self.api_client.chat.completions.create(
             model=self.model_name,
             messages=messages,
-            max_tokens=0,
+            max_tokens=max_tokens,  ## added on 12/20/2024
             temperature=0,
             logprobs=True,
             echo=True
@@ -130,8 +130,8 @@ class GenerateNextTokenProbAPI:
         return prob_target_string
     
 
-def compute_token_probs_api(y_star_string, prompt, prob_generator):    
-    prob = prob_generator.get_next_token_prob(prompt, y_star_string)    
+def compute_token_probs_api(y_star_string, prompt, prob_generator, max_tokens):
+    prob = prob_generator.get_next_token_prob(prompt, y_star_string, max_tokens)
     return prob
 
 def load_shadow_models_for_llama_3_instruct(model_dict, api_keys_subsample_ids):

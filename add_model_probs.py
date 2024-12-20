@@ -81,7 +81,7 @@ def add_model_probs(results, train_test_ents, client, world_model_endpoints, sha
                 add_world_model_probs(value, y_star, y_non_star, prompt, client, world_model_endpoints)
             else:
                 add_shadow_model_probs(value, y_star, y_non_star, prompt, client, shadow_model_endpoints)
-
+                
 # load target_token_probs.json into dict
 with open('with_world_model_3.json', 'r') as f:
     all_model_probs = json.load(f)
@@ -93,7 +93,7 @@ client = Together(api_key=key)
 hf_login(token="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")
 
 ## load dataset
-dataset = load_dataset("beanham/medsum_privacy")
+dataset = load_dataset("beanham/medsum_llm_attack")
 merged_dataset = concatenate_datasets([dataset['train'], dataset['validation'], dataset['test']])
 
 api_keys_subsample_ids = [
