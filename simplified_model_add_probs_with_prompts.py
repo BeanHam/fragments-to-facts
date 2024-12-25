@@ -9,11 +9,12 @@ def add_world_model_probs_single(value, token_label, prompt, client, world_model
     if 'world_models' not in value[data_key][token_label]:
         value[data_key][token_label]['world_models'] = []
         
-    for wm_endpoint in tqdm(world_model_endpoints, desc="world model endpoints", leave=False):
+    #for wm_endpoint in tqdm(world_model_endpoints, desc="world model endpoints", leave=False):
+    for wm_endpoint in world_model_endpoints:
         wm_prob_gen = GenerateNextTokenProbAPI(client, wm_endpoint)
-        wm_prob = compute_token_probs_api(token_label, prompt, wm_prob_gen)
+        max_tokens=len(wm_prob_gen.tokenizer(prompt)['input_ids'])+10
+        wm_prob = compute_token_probs_api(token_label, prompt, wm_prob_gen, max_tokens)
         value[data_key][token_label]['world_models'].append(float(wm_prob))
-
 
 def add_shadow_model_probs_single(value, token_label, prompt, client, shadow_model_endpoints, is_star=True):
     data_key = 'y_stars' if is_star else 'y_NON_stars'
@@ -21,11 +22,12 @@ def add_shadow_model_probs_single(value, token_label, prompt, client, shadow_mod
     if 'shadow_models' not in value[data_key][token_label]:
         value[data_key][token_label]['shadow_models'] = []
         
-    for sm_endpoint in tqdm(shadow_model_endpoints, desc="shadow model endpoints", leave=False):
+    #for sm_endpoint in tqdm(shadow_model_endpoints, desc="shadow model endpoints", leave=False):
+    for sm_endpoint in shadow_model_endpoints:
         sm_prob_gen = GenerateNextTokenProbAPI(client, sm_endpoint)
-        sm_prob = compute_token_probs_api(token_label, prompt, sm_prob_gen)
+        max_tokens=len(sm_prob_gen.tokenizer(prompt)['input_ids'])+10
+        sm_prob = compute_token_probs_api(token_label, prompt, sm_prob_gen, max_tokens)
         value[data_key][token_label]['shadow_models'].append(float(sm_prob))
-
 
 def add_model_probs(results, client, world_model_endpoints, shadow_model_endpoints, model_type='world'):
     for t_id, value in tqdm(results.items(), desc="processing results"):
@@ -50,24 +52,20 @@ def add_model_probs(results, client, world_model_endpoints, shadow_model_endpoin
                 add_shadow_model_probs_single(value, y_non_star, prompt, client, shadow_model_endpoints, is_star=False)
             
 
-with open('target_token_probs_train.json', 'r') as f:
-    all_model_probs = json.load(f)
-
+id=2
+with open('model_map.json') as f:
+    model_map=json.load(f)
+with open(f'target_token_probs_train_{id}_10_epochs_with_prompt_higher.json', 'r') as f:
+    all_model_probs = json.load(f)    
 key = "..."
 client = Together(api_key=key)
-
-shadow_model_endpoints = [
-    # "lr2872/Meta-Llama-3.1-8B-Instruct-Reference-2968ad77-11f16750",
-    # "lr2872/Meta-Llama-3.1-8B-Instruct-Reference-92ba3fbb-691f6f21"
-]
-
+shadow_model_endpoints=[model_map[f'shadow_train_{id}']['api_key']]
 world_model_endpoints = [
     "google/gemma-2b-it",
     'meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo',
     'mistralai/Mistral-7B-Instruct-v0.2'
 ]
-
+add_model_probs(all_model_probs, client, [], shadow_model_endpoints, model_type='shadow')
 add_model_probs(all_model_probs, client, world_model_endpoints, [], model_type='world')
-
-with open(f'target_token_probs_train_with_shadow_with_world.json', 'w') as f:
+with open(f'target_token_probs_train_{id}_10_epochs_with_prompt_higher_with_shadow_with_world.json', 'w') as f:
     json.dump(all_model_probs, f)

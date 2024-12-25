@@ -14,6 +14,8 @@ from peft import prepare_model_for_kbit_training
 from datasets import concatenate_datasets, DatasetDict, load_dataset
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig, AutoModel
 
+with open('model_map.json') as f:
+    model_map=json.load(f)
 key = '...'
 client = Together(api_key=key)
 hf_login(token="...")
@@ -25,35 +27,31 @@ merged_dataset = merged_dataset.add_column("new_ID", new_ids)
 split='train'
 id='3'
 subsample_split='subsample_ids' # subsample_ids shadow_ids
-
-## load model
 target_model_api_key="lr2872/Meta-Llama-3.1-8B-Instruct-Reference-88e7bbe3-b7d323df"
 prob_generator = GenerateNextTokenProbAPI(client, target_model_api_key)
 
 ## load data
-subsample_split='subsample_ids' # subsample_ids
 target_subsample_ids = pd.read_csv(f"formatted_data/{subsample_split}_{id}.csv")['new_ID'].tolist()
 train_dataset = merged_dataset.filter(lambda example: example['new_ID'] in target_subsample_ids)
 test_dataset = merged_dataset.filter(lambda example: example['new_ID'] not in target_subsample_ids)
 
 ## why are we only using len(ents)<5 as the unseen ents?
 ## because we want to make sure they aren't entities from the notes we use!
-unseen_ents = [sample['disease_ents'] for sample in test_dataset if len(sample['disease_ents']) < 5]
+unseen_ents = [sample['disease_ents'] for sample in test_dataset if len(sample['disease_ents'])<5]
 unseen_ents = [item for sublist in unseen_ents for item in sublist]
 
-train_dataset = [sample for sample in train_dataset if len(sample['disease_ents']) >= 5]
-test_dataset = [sample for sample in test_dataset if len(sample['disease_ents']) >= 5]
+train_dataset = [sample for sample in train_dataset if len(sample['disease_ents'])>=5]
+test_dataset = [sample for sample in test_dataset if len(sample['disease_ents'])>=5]
 train_test_ents = {'train': train_dataset,'test': test_dataset}
 
 results={}
 fail_counter = 0
-
+index=50
 # get first 50 pairs from train_test_ents 
-for name, samples in train_test_ents.items():
-    
-    for j, ent_list in tqdm(enumerate(samples[:50])):
-        
+for name, samples in train_test_ents.items():    
+    for j, ent_list in tqdm(enumerate(samples[:index])):
         ## create saving dictionary
+        print(f'{name.upper()}: {j+1}/{index}...')
         key=name+'_'+str(ent_list['ID'])
         results[key]={}
         results[key]['y_stars']={}
@@ -63,8 +61,7 @@ for name, samples in train_test_ents.items():
         unseen_ents_for_sample = random.sample(unseen_ents, k)
         
         ## go through each y_star
-        for i in tqdm(range(k)):
-            
+        for i in tqdm(range(k), leave=True, position=0):            
             y_star = ents[i]
             y_NON_star = unseen_ents_for_sample[i]
             results[key]['y_stars'][y_star]={}
@@ -75,9 +72,10 @@ for name, samples in train_test_ents.items():
             prompt_end = PROMPT_TEMPLATE[PROMPT_TO_USE][1]
             ents_string = ', '.join(remaining_ents)
             prompt = f"{prompt_start} {ents_string} {prompt_end}"
-
-            prob = compute_token_probs_api(y_star, prompt, prob_generator) 
-            prob_NON = compute_token_probs_api(y_NON_star, prompt, prob_generator)            
+            max_tokens=len(prob_generator.tokenizer(prompt)['input_ids'])+10
+            
+            prob = compute_token_probs_api(y_star, prompt, prob_generator, max_tokens)
+            prob_NON = compute_token_probs_api(y_NON_star, prompt, prob_generator, max_tokens)
             if prob == -1 or prob_NON == -1:
                 fail_counter += 1
                 print(f"failed {fail_counter} times")
