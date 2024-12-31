@@ -7,9 +7,10 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 PROMPT_TEMPLATE = {
     0: ["consider someone with the following conditions: ", ". the individual then also has the condition "],
     1: ["consider an individual whose medical note contains the following: ", ". that individual's medical note would also include: "],
+    2: ["Consider an individual whose medical summary contains: ", ". That individual's medical summary then also includes: "],
 }
 
-PROMPT_TO_USE = 0
+PROMPT_TO_USE = 2
 
 MODEL_DICT = {
     'llama_3_1': 'meta-llama/Meta-Llama-3.1-8B-Reference',
@@ -37,18 +38,6 @@ MODEL_DICT = {
 
 def likelihood_ratio_to_probability(likelihood_ratio, prior_in=0.5):
     
-    """
-    Function to convert from likelihood ratio to probability.
-    
-    Input:
-        - likelihood ratio = p_in/p_out. 
-            p_in is the target sequence probability from the target model.
-            p_out is the target sequence probability from the shadow model.
-                  
-    Output:
-        - probability
-    
-    """
     prior_out = 1 - prior_in
 
     # compute the marginal likelihood
@@ -72,7 +61,7 @@ class GenerateNextTokenProbAPI:
         self.tokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3-8B-Instruct')
 
     def find_target_in_tokens(self, target_string, tokens):
-        #print('finding target string in tokens')
+        # print('finding target string in tokens')
         reconstructed_text = ''.join(tokens).replace(' ', '').replace('Ġ', '')
         target_string_no_spaces = target_string.replace(' ', '').replace('Ġ', '')
 
@@ -101,10 +90,10 @@ class GenerateNextTokenProbAPI:
         else:
             return None
 
-    def get_next_token_prob(self, input_string, target_string, max_tokens):
+    def get_token_probs(self, prompt, target_string, remaining_ents, max_tokens):
         messages = [
             {"role": "system", "content": "You are a medical expert."},
-            {"role": "user", "content": input_string + " " + target_string}
+            {"role": "user", "content": prompt + " " + target_string}
         ]
 
         response = self.api_client.chat.completions.create(
@@ -119,20 +108,33 @@ class GenerateNextTokenProbAPI:
         tokens = response.prompt[0].logprobs.tokens
         logprobs = response.prompt[0].logprobs.token_logprobs
 
-        indices = self.find_target_in_tokens(target_string, tokens)
-        if indices is None:
+        target_indices = self.find_target_in_tokens(target_string, tokens)
+        if target_indices is None:
             return -1
 
-        start_index, end_index = indices
+        start_index, end_index = target_indices
         logprobs_slice = logprobs[start_index:end_index]
         prob_target_string = np.exp(sum(logprobs_slice))
 
-        return prob_target_string
-    
+        ents_prob = {}
+        for ent in remaining_ents:
+            ent_indices = self.find_target_in_tokens(ent, tokens)
+            if ent_indices is None:
+                ents_prob[ent] = -1
+                print(f"Entity '{ent}' not found in the echoed response. BAD.")
+            else:
+                start_idx, end_idx = ent_indices
+                logprobs_slice = logprobs[start_idx:end_idx]
+                ents_prob[ent] = np.exp(sum(logprobs_slice))
 
-def compute_token_probs_api(y_star_string, prompt, prob_generator, max_tokens):
-    prob = prob_generator.get_next_token_prob(prompt, y_star_string, max_tokens)
-    return prob
+        return {
+            "target_prob": prob_target_string,
+            "ents_prob": ents_prob
+        }
+
+
+def compute_token_probs_api(prob_generator, prompt, target_string, remaining_ents, max_tokens):
+    return prob_generator.get_token_probs(prompt, target_string, remaining_ents, max_tokens)
 
 def load_shadow_models_for_llama_3_instruct(model_dict, api_keys_subsample_ids):
     shadow_models_tuples = []    
