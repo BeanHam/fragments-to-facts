@@ -5,7 +5,7 @@
 
 UPLOAD_MAP="upload_map.json"
 #MODEL="meta-llama/Meta-Llama-3.1-8B-Instruct-Reference"
-MODEL="mistralai/Mistral-7B-Instruct-v0.3"
+MODEL="mistralai/Mistral-7B-Instruct-v0.2"
 
 if [ $# -lt 1 ]; then
   echo "Usage: $0 <suffixes>"
