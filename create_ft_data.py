@@ -87,7 +87,7 @@ def main():
         [format_for_finetuning(shadow_dataset_train[i], system_message, tokenizer) for i in tqdm(range(len(shadow_dataset_train)))]
     )
     formatted_shadow_val = '\n'.join(
-        [format_for_finetuning(shadow_dataset_train[i], system_message, tokenizer) for i in tqdm(range(len(shadow_dataset_val)))]
+        [format_for_finetuning(shadow_dataset_val[i], system_message, tokenizer) for i in tqdm(range(len(shadow_dataset_val)))]
     )
     with open(path.join(args.data_dir, f'{args.model_tag}_train.jsonl'), 'w') as f:
         f.write(formatted_train)
