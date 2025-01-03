@@ -25,7 +25,7 @@
  },
  "qwen":{
   "train": {
-   "job_id":"",
+   "job_id":"ft-ce15807c-b3bc-4642-8b0e-b279a164b9b9",
    "model_id": "",
    "api_key": ""
   },
