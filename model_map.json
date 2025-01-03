@@ -7,7 +7,7 @@
   },
   "shadow_train": {
    "job_id":"ft-c501d6fc-9a06-4fba-bd0a-43609816e081",
-   "model_id":"",
+   "model_id":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-b94c936b",
    "api_key":""
   },
  }, 
