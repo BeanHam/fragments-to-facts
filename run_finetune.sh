@@ -14,8 +14,8 @@
 
 UPLOAD_MAP="upload_map.json"
 WANDB_KEY="a73070a2ae35aa73562604c69dfc697278d19086"
-MODEL="mistralai/Mistral-7B-Instruct-v0.2"
-SPLIT="train"
+MODEL="Qwen/Qwen2-7B-Instruct"
+SPLIT="shadow"
 
 if [[ "$MODEL" == "meta-llama/Meta-Llama-3.1-8B-Instruct-Reference" ]]; then
   if [[ "$SPLIT" == "train" ]]; then
