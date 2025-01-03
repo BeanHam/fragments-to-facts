@@ -2,7 +2,7 @@
  "llama":{
   "train": {
    "job_id": "ft-f8d08210-7e00-4dcf-8dff-1b4831ba78d7",
-   "model_id":"",
+   "model_id":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-12711f3e",
    "api_key":""
   },
   "shadow_train": {
