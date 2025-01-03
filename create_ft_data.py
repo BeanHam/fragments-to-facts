@@ -42,6 +42,8 @@ def main():
         args.model_tag = 'llama'
     elif 'mistral' in args.model_id:
         args.model_tag = 'mistral'
+    elif 'Qwen' in args.model_id:
+        args.model_tag = 'qwen'
     
     # ----------------------
     # Load & Process Data
