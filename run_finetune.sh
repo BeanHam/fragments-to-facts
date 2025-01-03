@@ -25,9 +25,6 @@ elif [[ "$MODEL" == "mistralai/Mistral-7B-Instruct-v0.2" ]]; then
     VAL_FILE_ID=$(jq -r '."mistral_shadow_val.jsonl"' "$UPLOAD_MAP")
   fi
 fi
-if [ "$TRAIN_FILE_ID" = "null" ] || [ "$VAL_FILE_ID" = "null" ]; then
-  echo "no matching train/val entries found for suffix $SUFFIX in $UPLOAD_MAP"
-fi
 
 # together fine-tuning command
 together fine-tuning create \
