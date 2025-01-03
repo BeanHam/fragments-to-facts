@@ -13,7 +13,7 @@
  }, 
  "mistral":{
   "train": {
-   "job_id":"ft-ff26f29e-e6bf-4bcf-a33f-0f3da119c127",
+   "job_id":"",
    "model_id": "",
    "api_key": ""
   },
