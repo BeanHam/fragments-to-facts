@@ -33,4 +33,5 @@ together fine-tuning create \
   --wandb-api-key "$WANDB_KEY" \
   --validation-file "$VAL_FILE_ID" \
   --n-epochs 10 \
-  --n-evals 10
+  --n-evals 10 \ 
+  --lora "False"
