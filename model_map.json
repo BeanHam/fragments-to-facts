@@ -1,5 +1,22 @@
-{"llama":{"train": {"job_id": "ft-f8d08210-7e00-4dcf-8dff-1b4831ba78d7","model_id":"","api_key":""},
- "shadow_train": {"job_id":"","model_id":"","api_key":""}}, 
- "mistral":{"train": {"job_id":"","model_id": "","api_key": ""},
- "shadow_train": {"job_id": "","model_id": "","api_key": ""}}
+{
+ "llama":{
+  "train": {
+   "job_id": "ft-f8d08210-7e00-4dcf-8dff-1b4831ba78d7",
+   "model_id":"",
+   "api_key":""},
+  "shadow_train": {
+   "job_id":"",
+   "model_id":"",
+   "api_key":""}
+ }, 
+ "mistral":{
+  "train": {
+   "job_id":"",
+   "model_id": "",
+   "api_key": ""},
+  "shadow_train": {
+   "job_id": "",
+   "model_id": "",
+   "api_key": ""}
+ }
 }
