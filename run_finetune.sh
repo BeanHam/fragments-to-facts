@@ -34,4 +34,4 @@ together fine-tuning create \
   --validation-file "$VAL_FILE_ID" \
   --n-epochs 10 \
   --n-evals 10 \ 
-  --lora "False"
+  --no-lora
