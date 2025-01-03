@@ -6,6 +6,7 @@
 # MODEL OPTIONS:
 # 1. meta-llama/Meta-Llama-3.1-8B-Instruct-Reference
 # 2. mistralai/Mistral-7B-Instruct-v0.2
+# 3. Qwen/Qwen2-7B-Instruct
 
 # SPLIT OPTIONS:
 # 1. train
@@ -31,6 +32,14 @@ elif [[ "$MODEL" == "mistralai/Mistral-7B-Instruct-v0.2" ]]; then
   elif [[ "$SPLIT" == "shadow" ]]; then
     TRAIN_FILE_ID=$(jq -r '."mistral_shadow_train.jsonl"' "$UPLOAD_MAP")
     VAL_FILE_ID=$(jq -r '."mistral_shadow_val.jsonl"' "$UPLOAD_MAP")
+  fi
+elif [[ "$MODEL" == "Qwen/Qwen2-7B-Instruct" ]]; then
+  if [[ "$SPLIT" == "train" ]]; then
+    TRAIN_FILE_ID=$(jq -r '."qwen_train.jsonl"' "$UPLOAD_MAP")
+    VAL_FILE_ID=$(jq -r '."qwen_val.jsonl"' "$UPLOAD_MAP")
+  elif [[ "$SPLIT" == "shadow" ]]; then
+    TRAIN_FILE_ID=$(jq -r '."qwen_shadow_train.jsonl"' "$UPLOAD_MAP")
+    VAL_FILE_ID=$(jq -r '."qwen_shadow_val.jsonl"' "$UPLOAD_MAP")
   fi
 fi
 
