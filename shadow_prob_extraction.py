@@ -81,14 +81,16 @@ def main():
     args = parser.parse_args()
 
     ## log in together ai & hugginface
-    print('Load Target Probs...')
     with open('model_map.json') as f:
         model_map=json.load(f)
     with open(path.join(args.save_dir, f'{args.model_tag}_probs_prompt_{PROMPT_TO_USE}.json'), 'r') as f:
         all_probs = json.load(f)
     client = Together(api_key=args.together_key)
-    shadow_model_api_keys = model_map[args.model_tag]['shadow']['api_key']
-    input(f"Please deploy the following model {shadow_model_api_keys}. The deployment might take up to 10 mins. Once the model is deployed, please proceed...")
+    shadow_model_api_keys = [model_map[args.model_tag]['shadow']['api_key']]
+    input(f"""
+    =============================================================================================
+    Please deploy the following model {shadow_model_api_keys}. The deployment might take up to 10 mins. Once the model is deployed, please proceed...
+    =============================================================================================""")
     
     print('Add Shadow Probs...')
     add_model_probs(all_probs, client, [], shadow_model_api_keys, model_type='shadow')
