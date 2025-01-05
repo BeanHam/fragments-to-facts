@@ -140,7 +140,7 @@ def main():
 
     ## save results
     print('Save Results...')
-    with open(path.join(args.save_dir, f'{args.model_tag}_probs_prompt_{PROMPT_TO_USE}.json'), 'w') as f:
+    with open(path.join(args.save_dir, f'{args.model_tag}_target_probs_prompt_{PROMPT_TO_USE}.json'), 'w') as f:
         json.dump(results, f)
 
 if __name__ == "__main__":

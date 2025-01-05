@@ -81,7 +81,7 @@ def main():
     args = parser.parse_args()
 
     ## log in together ai & hugginface
-    with open(path.join(args.save_dir, f'{args.model_tag}_probs_prompt_{PROMPT_TO_USE}.json'), 'r') as f:
+    with open(path.join(args.save_dir, f'{args.model_tag}_shadow_probs_prompt_{PROMPT_TO_USE}.json'), 'r') as f:
         all_probs = json.load(f)
     client = Together(api_key=args.together_key)
     world_model_endpoints = [
@@ -95,7 +95,7 @@ def main():
 
     ## save results
     print('Save Results...')
-    with open(path.join(args.save_dir, f'{args.model_tag}_probs_prompt_{PROMPT_TO_USE}.json'), 'w') as f:
+    with open(path.join(args.save_dir, f'{args.model_tag}_world_probs_prompt_{PROMPT_TO_USE}.json'), 'w') as f:
         json.dump(all_probs, f)
 
 if __name__ == "__main__":

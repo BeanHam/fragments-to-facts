@@ -83,21 +83,21 @@ def main():
     ## log in together ai & hugginface
     with open('model_map.json') as f:
         model_map=json.load(f)
-    with open(path.join(args.save_dir, f'{args.model_tag}_probs_prompt_{PROMPT_TO_USE}.json'), 'r') as f:
+    with open(path.join(args.save_dir, f'{args.model_tag}_target_probs_prompt_{PROMPT_TO_USE}.json'), 'r') as f:
         all_probs = json.load(f)
     client = Together(api_key=args.together_key)
-    shadow_model_api_keys = [model_map[args.model_tag]['shadow']['api_key']]
+    shadow_model_endpoints = [model_map[args.model_tag]['shadow']['api_key']]
     input(f"""
     =============================================================================================
-    Please deploy the following model {shadow_model_api_keys}. The deployment might take up to 10 mins. Once the model is deployed, please proceed...
+    Please deploy the following model {shadow_model_endpoints}. The deployment might take up to 10 mins. Once the model is deployed, please proceed...
     =============================================================================================""")
     
     print('Add Shadow Probs...')
-    add_model_probs(all_probs, client, [], shadow_model_api_keys, model_type='shadow')
+    add_model_probs(all_probs, client, [], shadow_model_endpoints, model_type='shadow')
 
     ## save results
     print('Save Results...')
-    with open(path.join(args.save_dir, f'{args.model_tag}_probs_prompt_{PROMPT_TO_USE}.json'), 'w') as f:
+    with open(path.join(args.save_dir, f'{args.model_tag}_shadow_probs_prompt_{PROMPT_TO_USE}.json'), 'w') as f:
         json.dump(all_probs, f)
 
 if __name__ == "__main__":
