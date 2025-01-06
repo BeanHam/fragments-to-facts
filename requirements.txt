@@ -5,5 +5,5 @@ huggingface_hub
 peft
 datasets
 transformers
-together
+together==1.3.5
 scikit-learn
