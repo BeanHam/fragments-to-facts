@@ -35,7 +35,10 @@ together fine-tuning create --training-file $TRAIN_FILE_ID --model $MODEL_NAME -
 4. Finalize experiments (can do in parallel using current data)
    - Compare the naive attack with our score with learned model
    - Make probability observation
+  
+5. Ablations
+   - Change the number of correct / incorrect tokens in the prompt (say, 20%, 50%, 80% of tokens from the actual sample) to check how sensitive the scheme is to having EXACT overlap in the subsample with the actual sample that was trained on.
 
-5. Probably need new datasets
+6. Probably need new datasets
    - Similar medical setting dataset (?)
-   - Something synthetic (with very rare tokens) (?)
+   - Legal
