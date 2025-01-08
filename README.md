@@ -42,3 +42,6 @@ together fine-tuning create --training-file $TRAIN_FILE_ID --model $MODEL_NAME -
 6. Probably need new datasets
    - Similar medical setting dataset (?)
    - Legal
+  
+7. ROC curve baselines
+   - Classifier with JUST the information from the LR-Attack, and the classifier with JUST the information for the PRISM attack, and then the classifier with all the possible information
