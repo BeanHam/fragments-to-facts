@@ -38,10 +38,12 @@ together fine-tuning create --training-file $TRAIN_FILE_ID --model $MODEL_NAME -
   
 5. Ablations
    - Change the number of correct / incorrect tokens in the prompt (say, 20%, 50%, 80% of tokens from the actual sample) to check how sensitive the scheme is to having EXACT overlap in the subsample with the actual sample that was trained on.
+   - Does the number of ents effect the accuracy? As in, fewer, more conditioned tokens, the better worse? We can check this from the results we have.
 
 6. Probably need new datasets
    - Similar medical setting dataset (?)
    - Legal
   
 7. ROC curve baselines
-   - Classifier with JUST the information from the LR-Attack, and the classifier with JUST the information for the PRISM attack, and then the classifier with all the possible information
+   - Classifier with JUST the information from the LR-Attack, and the classifier with JUST the information for the PRISM attack, and then the classifier with all the possible information.
+   - Classifier with the vector of ent probs
