@@ -14,8 +14,8 @@
 
 UPLOAD_MAP="upload_map.json"
 WANDB_KEY="a73070a2ae35aa73562604c69dfc697278d19086"
-MODEL="meta-llama/Meta-Llama-3.1-8B-Instruct-Reference"
-SPLIT="train"
+MODEL="Qwen/Qwen2-7B-Instruct"
+SPLIT="shadow"
 EPOCH=1
 
 if [[ "$MODEL" == "meta-llama/Meta-Llama-3.1-8B-Instruct-Reference" ]]; then
