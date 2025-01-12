@@ -3,12 +3,12 @@
                     "train": {
                               "job_id":1,
                               "model_id":2,
-                              "api_key"3:
+                              "api_key":3
                     },
                     "shadow": {
                               "job_id":1,
                               "model_id":2,
-                              "api_key"3:
+                              "api_key":3
                     }
           },
           "llama_10_epoch":{
