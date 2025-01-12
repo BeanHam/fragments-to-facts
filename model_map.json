@@ -1,12 +1,12 @@
 {
           "llama_1_epoch":{
                     "train": {
-                              "job_id":1,
-                              "model_id":2,
+                              "job_id":"ft-e1f91af5-553a-4e03-9439-5b4a53befe42",
+                              "model_id":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-899929de",
                               "api_key":3
                     },
                     "shadow": {
-                              "job_id":1,
+                              "job_id":"ft-848aa6d8-4769-471e-9ec5-b6376b54d2f7",
                               "model_id":2,
                               "api_key":3
                     }
