@@ -30,8 +30,8 @@
                               "api_key": ""
                     },
                     "shadow": {
-                              "job_id": "",
-                              "model_id": "",
+                              "job_id": "ft-8a771be4-c93e-4672-b12d-c1f3c350125e",
+                              "model_id": "bh193/Qwen2-7B-Instruct-7cd2cfb1",
                               "api_key": ""
                     }
           },
