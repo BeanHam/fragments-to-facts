@@ -1,14 +1,14 @@
 {
           "llama_1_epoch":{
                     "train": {
-                              "job_id":,
-                              "model_id":,
-                              "api_key":
+                              "job_id":1,
+                              "model_id":2,
+                              "api_key"3:
                     },
                     "shadow": {
-                              "job_id":,
-                              "model_id":,
-                              "api_key":
+                              "job_id":1,
+                              "model_id":2,
+                              "api_key"3:
                     }
           },
           "llama_10_epoch":{
@@ -37,14 +37,14 @@
           },
           "qwen_10_epoch":{
                     "train": {
-                              "job_id":,
-                              "model_id":,
-                              "api_key":
+                              "job_id":1,
+                              "model_id":2,
+                              "api_key":3
                     },
                     "shadow": {
-                              "job_id":,
-                              "model_id":,
-                              "api_key":
+                              "job_id":1,
+                              "model_id":2,
+                              "api_key":3
                     }
           },
 }
