@@ -16,6 +16,7 @@ UPLOAD_MAP="upload_map.json"
 WANDB_KEY="a73070a2ae35aa73562604c69dfc697278d19086"
 MODEL="Qwen/Qwen2-7B-Instruct"
 SPLIT="shadow"
+EPOCH=10
 
 if [[ "$MODEL" == "meta-llama/Meta-Llama-3.1-8B-Instruct-Reference" ]]; then
   if [[ "$SPLIT" == "train" ]]; then
@@ -49,5 +50,5 @@ together fine-tuning create \
   --model "$MODEL" \
   --wandb-api-key "$WANDB_KEY" \
   --validation-file "$VAL_FILE_ID" \
-  --n-epochs 10 \
-  --n-evals 10
+  --n-epochs "$EPOCH" \
+  --n-evals "$EPOCH"
