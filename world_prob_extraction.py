@@ -1,9 +1,9 @@
 import json
 import argparse
+from utils import *
 from os import path
 from tqdm import tqdm
 from together import Together
-from utils import *
 
 def add_world_model_probs_single(value, token_label, prompt, client, world_model_endpoints, is_star=True):
     data_key = 'y_stars' if is_star else 'y_NON_stars'
@@ -76,7 +76,7 @@ def main():
     #-------------------    
     parser = argparse.ArgumentParser()
     parser.add_argument('--save_dir', type=str, default='probs/')
-    parser.add_argument('--model_tag', type=str, default='llama')
+    parser.add_argument('--model_tag', type=str, default='llama_1_epoch')
     parser.add_argument('--together_key', type=str)
     args = parser.parse_args()
 
