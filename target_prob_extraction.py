@@ -36,6 +36,10 @@ def main():
     target_model_api_key = model_map[args.model_tag]['train']['api_key']
     prob_generator = GenerateNextTokenProbAPI(client, target_model_api_key)    
     hf_login()
+    input(f"""
+    =============================================================================================
+    Please deploy the following model {target_model_api_key}. The deployment might take up to 10 mins. Once the model is deployed, please proceed...
+    =============================================================================================""")
 
     ## load dataset
     print('Load & Prepare Dataset...')
