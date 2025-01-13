@@ -27,12 +27,12 @@
                     "train": {
                               "job_id":"ft-190dc70b-e30a-416d-bc21-96f95a2a75f6",
                               "model_id": "bh193/Qwen2-7B-Instruct-2b74b394",
-                              "api_key": ""
+                              "api_key": "bh193/Qwen2-7B-Instruct-2b74b394-1e6f83a4"
                     },
                     "shadow": {
                               "job_id": "ft-8a771be4-c93e-4672-b12d-c1f3c350125e",
                               "model_id": "bh193/Qwen2-7B-Instruct-7cd2cfb1",
-                              "api_key": ""
+                              "api_key": "bh193/Qwen2-7B-Instruct-7cd2cfb1-7411fd58"
                     }
           },
           "qwen_10_epoch":{
