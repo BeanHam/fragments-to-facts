@@ -76,7 +76,7 @@ def main():
     #-------------------    
     parser = argparse.ArgumentParser()
     parser.add_argument('--save_dir', type=str, default='probs/')
-    parser.add_argument('--model_tag', type=str, default='llama')
+    parser.add_argument('--model_tag', type=str, default='llama_1_epoch')
     parser.add_argument('--together_key', type=str)
     args = parser.parse_args()
 
