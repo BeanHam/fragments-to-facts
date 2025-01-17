@@ -19,7 +19,7 @@ def main():
     # Parameters
     #-------------------    
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', type=str, default='beanham/medsum_llm_attack')
+    parser.add_argument('--dataset', type=str, default='beanham/law_llm_attack')
     parser.add_argument('--data_dir', type=str, default='formatted_data/')
     args = parser.parse_args()
     if not path.exists(args.data_dir):
@@ -30,7 +30,7 @@ def main():
     # ----------------------
     print('Downloading and preparing data...')    
     dataset = load_dataset(args.dataset)
-    all_data = concatenate_datasets([dataset['train'], dataset['validation'], dataset['test']])
+    all_data = concatenate_datasets([dataset['train'], dataset['val'], dataset['test']])
     new_ids = range(len(all_data))
     all_data = all_data.add_column("new_ID", new_ids)
     subsample_ids = subsample_data(all_data)

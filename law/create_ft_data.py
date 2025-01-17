@@ -6,7 +6,7 @@ from os import makedirs, path
 from transformers import AutoTokenizer
 from datasets import load_dataset, concatenate_datasets
 
-system_message = """You are a helpful medical assistant! Please help me summarize dialogues between doctors and patients."""
+system_message = """You are a helpful law assistant! Please help me summarize the legal cases."""
 
 def format_for_finetuning(data,
                           system_message: str,
@@ -17,8 +17,8 @@ def format_for_finetuning(data,
     
     chat = [
         {"role": "system", "content": system_message},
-        {"role": "user", "content": data['dialogue']},
-        {"role": "assistant", "content": data['section_text']},      
+        {"role": "user", "content": data['text']},
+        {"role": "assistant", "content": data['summary']},      
     ]
     text = tokenizer.apply_chat_template(chat, tokenize=False, add_generation_prompt=False)
     return json.dumps({"text":text})
@@ -27,12 +27,17 @@ def format_for_finetuning(data,
 # Main Function
 #-----------------------
 def main():
+
+    # MODEL OPTIONS:
+    # 1. meta-llama/Meta-Llama-3.1-8B-Instruct-Reference
+    # 2. Qwen/Qwen2-7B-Instruct
+    # 3. mistralai/Mistral-7B-Instruct-v0.2
     
     #-------------------
     # Parameters
     #-------------------    
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', type=str, default='beanham/medsum_llm_attack')
+    parser.add_argument('--dataset', type=str, default='beanham/law_llm_attack')
     parser.add_argument('--data_dir', type=str, default='formatted_data/')
     parser.add_argument('--model_id', type=str, default='meta-llama/Llama-3.1-8B-Instruct')
     args = parser.parse_args()
@@ -51,7 +56,7 @@ def main():
     print('Downloading and preparing data...')
     tokenizer = AutoTokenizer.from_pretrained(args.model_id)
     dataset = load_dataset(args.dataset)
-    all_data = concatenate_datasets([dataset['train'], dataset['validation'], dataset['test']])
+    all_data = concatenate_datasets([dataset['train'], dataset['val'], dataset['test']])
     new_ids = range(len(all_data))
     all_data = all_data.add_column("new_ID", new_ids)
 
