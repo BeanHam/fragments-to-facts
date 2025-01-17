@@ -1,48 +1,24 @@
 {
-          "llama_1_epoch":{
-                    "train": {
-                              "job_id":"",
-                              "model_id":"",
-                              "api_key":""
-                    },
-                    "shadow": {
-                              "job_id":"",
-                              "model_id":"",
-                              "api_key":""
-                    }
-          },
           "llama_10_epoch":{
                     "train": {
-                              "job_id": "",
-                              "model_id":"",
+                              "job_id": "ft-ce114ac6-f3c3-456e-b14a-668a65807ad9",
+                              "model_id":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-76d7c75c",
                               "api_key":""
                     },
                     "shadow": {
-                              "job_id":"",
-                              "model_id":"",
+                              "job_id":"ft-fc1a0cc4-0428-43fe-8301-f70befa4df6a",
+                              "model_id":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-95efb948",
                               "api_key":""
-                    }
-          },
-          "qwen_1_epoch":{
-                    "train": {
-                              "job_id":"",
-                              "model_id": "",
-                              "api_key": ""
-                    },
-                    "shadow": {
-                              "job_id": "",
-                              "model_id": "",
-                              "api_key": ""
                     }
           },
           "qwen_10_epoch":{
                     "train": {
-                              "job_id":"",
+                              "job_id":"ft-5b889ba9-04bc-4d8c-8933-d45fcbebb1f6",
                               "model_id": "",
                               "api_key": ""
                     },
                     "shadow": {
-                              "job_id": "",
+                              "job_id": "ft-48802da6-219a-4e94-8414-4af3df2d3d70",
                               "model_id": "",
                               "api_key": ""
                     }
