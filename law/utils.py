@@ -7,7 +7,8 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 PROMPT_TEMPLATE = {
     0: ["consider someone with the following conditions: ", ". the individual then also has the condition "],
     1: ["consider an individual whose medical note contains the following: ", ". that individual's medical note would also include: "],
-    2: ["Consider an individual whose medical summary contains: ", ". That individual's medical summary then also includes: "],
+    2: ["Consider an individual whose legal document summary contains the following criminal behaviors and identifiable information: ",
+        ". That individual's legal document summary then also includes: "]
 }
 
 PROMPT_TO_USE = 2
