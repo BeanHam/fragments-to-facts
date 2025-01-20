@@ -76,7 +76,7 @@ def main():
     results = {}
     fail_counter = 0
     for name, samples in train_test_ents.items():
-        for j, ent_list in tqdm(enumerate(samples[:3])):
+        for j, ent_list in tqdm(enumerate(samples)):
             print(f'{name.upper()}: {j+1}/{len(samples)}...')
             key_name = name + '_' + str(ent_list['new_ID'])                       ## changed from ID to new_ID; should do the same to medical
             results[key_name] = {}                                                ## test as well; but should not impact the results.
