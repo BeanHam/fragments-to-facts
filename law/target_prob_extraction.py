@@ -22,7 +22,7 @@ def main():
     # Parameters
     #-------------------    
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', type=str, default='beanham/medsum_llm_attack')
+    parser.add_argument('--dataset', type=str, default='beanham/law_llm_attack')
     parser.add_argument('--data_dir', type=str, default='formatted_data/')
     parser.add_argument('--save_dir', type=str, default='probs/')
     parser.add_argument('--model_tag', type=str, default='llama_1_epoch')
@@ -44,7 +44,7 @@ def main():
     ## load dataset
     print('Load & Prepare Dataset...')
     dataset = load_dataset(args.dataset)
-    all_data = concatenate_datasets([dataset['train'], dataset['validation'], dataset['test']])
+    all_data = concatenate_datasets([dataset['train'], dataset['val'], dataset['test']])
     new_ids = range(len(all_data))
     all_data = all_data.add_column("new_ID", new_ids)
     
