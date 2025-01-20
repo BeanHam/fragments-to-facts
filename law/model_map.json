@@ -8,14 +8,14 @@
                     "shadow": {
                               "job_id":"ft-fc1a0cc4-0428-43fe-8301-f70befa4df6a",
                               "model_id":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-95efb948",
-                              "api_key":""
+                              "api_key":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-95efb948-dda634e7"
                     }
           },
           "qwen_10_epoch":{
                     "train": {
                               "job_id":"ft-5b889ba9-04bc-4d8c-8933-d45fcbebb1f6",
                               "model_id": "bh193/Qwen2-7B-Instruct-78fefb11",
-                              "api_key": ""
+                              "api_key": "bh193/Qwen2-7B-Instruct-78fefb11-10ed1048"
                     },
                     "shadow": {
                               "job_id": "ft-48802da6-219a-4e94-8414-4af3df2d3d70",
