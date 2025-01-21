@@ -4,7 +4,6 @@ from sklearn.metrics import roc_curve, roc_auc_score
 import numpy as np
 
 from utils import *
-from attacks import *
 
 SMALL_CONSTANT = 1e-12
 
@@ -90,13 +89,13 @@ def main_runner(model_name, save_path, data_path, prompt_id=2):
     with open(f"{data_path}/probs/{model_name}_world_probs_prompt_{prompt_id}.json") as f:
         data = json.load(f)
 
-        results = json_to_dataframe(data)
-        results = assign_ner_categories(results, model_name)
+        results = json_to_dataframe(data, data_type=data_path)
+        results = assign_ner_categories(results, model_name, data_type=data_path)
 
         X = results[['target', 'world_model', 'shadow_model']]
         y = results['label']
 
-        eval_results, model = run_evaluation_pipeline(X, y)
+        eval_results, _ = run_evaluation_pipeline(X, y)
         print(eval_results)
 
         results['y_pred_model'] = eval_results['y_pred_model']
@@ -107,14 +106,15 @@ def main_runner(model_name, save_path, data_path, prompt_id=2):
         plot_overall_roc(fpr_model = eval_results['roc_curve']['model'][0], 
                          tpr_model = eval_results['roc_curve']['model'][1], 
                          roc_auc_model = eval_results['roc_auc_model'],
-                         fpr_naive = eval_results['roc_curve']['lr_attack'][0], 
-                         tpr_naive = eval_results['roc_curve']['lr_attack'][1], 
-                         roc_auc_naive = eval_results['roc_auc_lr_attack'],
-                         fpr_ours = eval_results['roc_curve']['prism'][0], 
-                         tpr_ours = eval_results['roc_curve']['prism'][1], 
-                         roc_auc_ours = eval_results['roc_auc_prism'],
+                         fpr_lr_attack = eval_results['roc_curve']['lr_attack'][0], 
+                         tpr_lr_attack = eval_results['roc_curve']['lr_attack'][1], 
+                         roc_auc_lr_attack = eval_results['roc_auc_lr_attack'],
+                         fpr_prism = eval_results['roc_curve']['prism'][0], 
+                         tpr_prism = eval_results['roc_curve']['prism'][1], 
+                         roc_auc_prism = eval_results['roc_auc_prism'],
                          title=f'Attack Scores {model_name}',
-                         filename=f"{save_path}/figures/{model_name}_overall.pdf")
+                         filename=f"{save_path}/figures/{data_path}_{model_name}_overall.pdf",
+                         data_type=data_path)
 
         # NOTE: currently broken with the caching, though not super important
         # plot_feature_importance(model, 
@@ -146,14 +146,15 @@ def main_runner(model_name, save_path, data_path, prompt_id=2):
                               results['lr_attack_scores'],
                               results['prism_attack_scores'],
                               model_name,
-                              save_path=save_path)
+                              save_path=save_path,
+                              data_type=data_path)
 
 
 if __name__ == '__main__':
 
-    models =['llama','qwen']
-    data_paths = ['medical'] # 'law'
-    epochs = [1, 10]
+    models =['qwen','llama']
+    data_paths = ['medical'] # 'law' 'medical
+    epochs = [1] # 1
     split = 2
 
     for model in models:
