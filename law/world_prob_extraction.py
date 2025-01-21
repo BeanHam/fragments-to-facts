@@ -21,7 +21,7 @@ def add_world_model_probs_single(value, token_label, prompt, client, world_model
     #for wm_endpoint in tqdm(world_model_endpoints, desc="world model endpoints", leave=False):
     for wm_endpoint in world_model_endpoints:
         wm_prob_gen = GenerateNextTokenProbAPI(client, wm_endpoint)
-        max_tokens=len(wm_prob_gen.tokenizer(prompt)['input_ids'])+10
+        max_tokens=len(wm_prob_gen.tokenizer(prompt)['input_ids'])+20
         # wm_prob = compute_token_probs_api(token_label, prompt, wm_prob_gen, max_tokens)
         wm_result = wm_prob_gen.get_token_probs(
             prompt=prompt,
@@ -76,7 +76,7 @@ def main():
     #-------------------    
     parser = argparse.ArgumentParser()
     parser.add_argument('--save_dir', type=str, default='probs/')
-    parser.add_argument('--model_tag', type=str, default='llama_1_epoch')
+    parser.add_argument('--model_tag', type=str, default='llama_10_epoch')
     parser.add_argument('--together_key', type=str)
     args = parser.parse_args()
 
