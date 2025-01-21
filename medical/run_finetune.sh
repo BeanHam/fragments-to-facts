@@ -14,7 +14,7 @@
 
 UPLOAD_MAP="upload_map.json"
 WANDB_KEY="a73070a2ae35aa73562604c69dfc697278d19086"
-MODEL="Qwen/Qwen2-7B-Instruct"
+MODEL="mistralai/Mistral-7B-Instruct-v0.2"
 SPLIT="shadow"
 EPOCH=1
 
