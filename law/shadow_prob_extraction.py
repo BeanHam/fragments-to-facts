@@ -21,7 +21,7 @@ def add_shadow_model_probs_single(value, token_label, prompt, client, shadow_mod
     #for sm_endpoint in tqdm(shadow_model_endpoints, desc="shadow model endpoints", leave=False):
     for sm_endpoint in shadow_model_endpoints:
         sm_prob_gen = GenerateNextTokenProbAPI(client, sm_endpoint)
-        max_tokens=len(sm_prob_gen.tokenizer(prompt)['input_ids'])+10
+        max_tokens=len(sm_prob_gen.tokenizer(prompt)['input_ids'])+20
         # sm_prob = compute_token_probs_api(token_label, prompt, sm_prob_gen, max_tokens)
 
         sm_result = sm_prob_gen.get_token_probs(
@@ -76,7 +76,7 @@ def main():
     #-------------------    
     parser = argparse.ArgumentParser()
     parser.add_argument('--save_dir', type=str, default='probs/')
-    parser.add_argument('--model_tag', type=str, default='llama_1_epoch')
+    parser.add_argument('--model_tag', type=str, default='llama_10_epoch')
     parser.add_argument('--together_key', type=str)
     args = parser.parse_args()
 
