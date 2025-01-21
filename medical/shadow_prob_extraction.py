@@ -88,9 +88,9 @@ def main():
     client = Together(api_key=args.together_key)
     shadow_model_endpoints = [model_map[args.model_tag]['shadow']['api_key']]
     input(f"""
-    =============================================================================================
+    ======================================================================================================================================================
     Please deploy the following model {shadow_model_endpoints}. The deployment might take up to 10 mins. Once the model is deployed, please proceed...
-    =============================================================================================""")
+    ======================================================================================================================================================""")
     
     print('Add Shadow Probs...')
     add_model_probs(all_probs, client, [], shadow_model_endpoints, model_type='shadow')
