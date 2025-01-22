@@ -39,10 +39,10 @@ def main():
     target_model_api_key = model_map[args.model_tag]['train']['api_key']
     if args.hf_key:
         hf_login(token=args.hf_key, add_to_git_credential=True)
-        tokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3-8B-Instruct', token=args.hf_key)
+        tokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3.1-8B-Instruct', token=args.hf_key)
     else:
         hf_login()
-        tokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3-8B-Instruct')
+        tokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3.1-8B-Instruct')
 
     prob_generator = GenerateNextTokenProbAPI(client, target_model_api_key)    
     input(f"""

@@ -27,7 +27,7 @@
         "train": {
             "job_id":"ft-2675b26e-0ae6-40af-92c5-dc06c59def02",
             "model_id":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-999d797c",
-            "api_key":""
+            "api_key":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-999d797c-bb243c12"
         },
         "shadow": {
             "job_id":"ft-72f91af4-ece9-4564-9396-d915fc4005b6",
