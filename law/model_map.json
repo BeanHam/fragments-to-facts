@@ -32,7 +32,7 @@
             "shadow": {
                       "job_id": "ft-51dfcb72-d82e-4291-9d57-657caa9ae215",
                       "model_id": "bh193/Mistral-7B-Instruct-v0.2-b13e0f8e",
-                      "api_key": ""
+                      "api_key": "bh193/Mistral-7B-Instruct-v0.2-b13e0f8e-04748f4d"
             }
   }          
 }
