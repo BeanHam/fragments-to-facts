@@ -8,17 +8,21 @@
 # 2. Qwen/Qwen2-7B-Instruct
 # 3. mistralai/Mistral-7B-Instruct-v0.2
 
+## for ablation study
+# 4. meta-llama/Llama-3.2-1B-Instruct
+# 5. meta-llama/Llama-3.2-3B-Instruct
+
 # SPLIT OPTIONS:
 # 1. train
 # 2. shadow
 
 UPLOAD_MAP="upload_map.json"
 WANDB_KEY="a73070a2ae35aa73562604c69dfc697278d19086"
-MODEL="mistralai/Mistral-7B-Instruct-v0.2"
-SPLIT="shadow"
-EPOCH=1
+MODEL="meta-llama/Llama-3.2-1B-Instruct"
+SPLIT="train"
+EPOCH=10
 
-if [[ "$MODEL" == "meta-llama/Meta-Llama-3.1-8B-Instruct-Reference" ]]; then
+if [[ "$MODEL" == "meta-llama/Meta-Llama-3.1-8B-Instruct-Reference" ] || [ "$MODEL" == "meta-llama/Llama-3.2-1B-Instruct" ] || [ "$MODEL" == "meta-llama/Llama-3.2-3B-Instruct" ]]; then
   if [[ "$SPLIT" == "train" ]]; then
     TRAIN_FILE_ID=$(jq -r '."llama_train.jsonl"' "$UPLOAD_MAP")
     VAL_FILE_ID=$(jq -r '."llama_val.jsonl"' "$UPLOAD_MAP")
