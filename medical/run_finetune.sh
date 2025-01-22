@@ -15,8 +15,9 @@
 UPLOAD_MAP="upload_map.json"
 WANDB_KEY="a73070a2ae35aa73562604c69dfc697278d19086"
 MODEL="meta-llama/Meta-Llama-3.1-8B-Instruct-Reference"
-SPLIT="train"
-EPOCH=10
+SPLIT="shadow"
+TRAIN_EPOCH=20  ## change to 10 for full finetuning
+EVAL_EPOCH=10
 LORA="TRUE"
 
 if [[ "$MODEL" == "meta-llama/Meta-Llama-3.1-8B-Instruct-Reference" ]]; then
@@ -54,8 +55,8 @@ if [ "$LORA" == "TRUE" ]; then
     --model "$MODEL" \
     --wandb-api-key "$WANDB_KEY" \
     --validation-file "$VAL_FILE_ID" \
-    --n-epochs "$EPOCH" \
-    --n-evals "$EPOCH" \
+    --n-epochs "$TRAIN_EPOCH" \
+    --n-evals "$EVAL_EPOCH" \
     --lora
 else
 ## full finetuning
@@ -64,6 +65,6 @@ else
     --model "$MODEL" \
     --wandb-api-key "$WANDB_KEY" \
     --validation-file "$VAL_FILE_ID" \
-    --n-epochs "$EPOCH" \
-    --n-evals "$EPOCH"
+    --n-epochs "$TRAIN_EPOCH" \
+    --n-evals "$EVAL_EPOCH"
 fi    
