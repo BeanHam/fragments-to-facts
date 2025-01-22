@@ -4,6 +4,7 @@ from utils import *
 from os import path
 from tqdm import tqdm
 from together import Together
+from huggingface_hub import login as hf_login
 
 def add_world_model_probs_single(value, token_label, prompt, client, world_model_endpoints, is_star=True):
     data_key = 'y_stars' if is_star else 'y_NON_stars'
@@ -78,12 +79,17 @@ def main():
     parser.add_argument('--save_dir', type=str, default='probs/')
     parser.add_argument('--model_tag', type=str, default='llama_1_epoch')
     parser.add_argument('--ablation_pct', type=str, default='1.0')
+    parser.add_argument('--hf_key', type=str, default='')
     parser.add_argument('--together_key', type=str)
     args = parser.parse_args()
 
     ablation_str = int(float(args.ablation_pct)*100)
 
     ## log in together ai & hugginface
+    if args.hf_key:
+        hf_login(token=args.hf_key, add_to_git_credential=True)
+        tokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3.1-8B-Instruct', token=args.hf_key)
+    
     if ablation_str != 100:
         with open(path.join(args.save_dir, f'{args.model_tag}_shadow_probs_prompt_{PROMPT_TO_USE}_{ablation_str}.json'), 'r') as f:
             all_probs = json.load(f)
