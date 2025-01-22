@@ -77,14 +77,21 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--save_dir', type=str, default='probs/')
     parser.add_argument('--model_tag', type=str, default='llama_1_epoch')
+    parser.add_argument('--ablation_pct', type=str, default='1.0')
     parser.add_argument('--together_key', type=str)
     args = parser.parse_args()
 
+    ablation_str = int(float(args.ablation_pct)*100)
+    
     ## log in together ai & hugginface
     with open('model_map.json') as f:
         model_map=json.load(f)
-    with open(path.join(args.save_dir, f'{args.model_tag}_target_probs_prompt_{PROMPT_TO_USE}.json'), 'r') as f:
-        all_probs = json.load(f)
+    if ablation_str != 100:
+        with open(path.join(args.save_dir, f'{args.model_tag}_target_probs_prompt_{PROMPT_TO_USE}_{ablation_str}.json'), 'r') as f:
+            all_probs = json.load(f)
+    else:
+        with open(path.join(args.save_dir, f'{args.model_tag}_target_probs_prompt_{PROMPT_TO_USE}.json'), 'r') as f:
+            all_probs = json.load(f)
     client = Together(api_key=args.together_key)
     shadow_model_endpoints = [model_map[args.model_tag]['shadow']['api_key']]
     input(f"""
@@ -97,8 +104,12 @@ def main():
 
     ## save results
     print('Save Results...')
-    with open(path.join(args.save_dir, f'{args.model_tag}_shadow_probs_prompt_{PROMPT_TO_USE}.json'), 'w') as f:
-        json.dump(all_probs, f)
+    if ablation_str != 100:
+        with open(path.join(args.save_dir, f'{args.model_tag}_shadow_probs_prompt_{PROMPT_TO_USE}_{ablation_str}.json'), 'w') as f:
+            json.dump(all_probs, f)
+    else:
+        with open(path.join(args.save_dir, f'{args.model_tag}_shadow_probs_prompt_{PROMPT_TO_USE}.json'), 'w') as f:
+            json.dump(all_probs, f)
 
 if __name__ == "__main__":
     main()
