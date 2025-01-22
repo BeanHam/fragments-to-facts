@@ -152,9 +152,9 @@ def main_runner(model_name, save_path, data_path, prompt_id=2):
 
 if __name__ == '__main__':
 
-    models =['qwen','llama']
+    models =['mistral'] # 'mistral', 'qwen','llama'
     data_paths = ['medical'] # 'law' 'medical
-    epochs = [1] # 1
+    epochs = [10] # 1
     split = 2
 
     for model in models:
