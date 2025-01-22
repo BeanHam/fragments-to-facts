@@ -1,6 +1,7 @@
 import os
 import time
 import json
+import math
 import random
 import argparse
 import numpy as np
@@ -26,6 +27,8 @@ def main():
     parser.add_argument('--data_dir', type=str, default='formatted_data/')
     parser.add_argument('--save_dir', type=str, default='probs/')
     parser.add_argument('--model_tag', type=str, default='llama_1_epoch')
+    parser.add_argument('--ablation_pct', type=str, default='1.0')
+    parser.add_argument('--hf_key', type=str, default='')
     parser.add_argument('--together_key', type=str)
     args = parser.parse_args()
 
@@ -34,8 +37,14 @@ def main():
         model_map=json.load(f)
     client = Together(api_key=args.together_key)
     target_model_api_key = model_map[args.model_tag]['train']['api_key']
+    if args.hf_key:
+        hf_login(token=args.hf_key, add_to_git_credential=True)
+        tokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3-8B-Instruct', token=args.hf_key)
+    else:
+        hf_login()
+        tokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3-8B-Instruct')
+
     prob_generator = GenerateNextTokenProbAPI(client, target_model_api_key)    
-    hf_login()
     input(f"""
     ======================================================================================================================================================
     Please deploy the following model {target_model_api_key}. The deployment might take up to 10 mins. Once the model is deployed, please proceed...
@@ -94,6 +103,27 @@ def main():
                 results[key_name]['y_NON_stars'][y_NON_star] = {}
     
                 remaining_ents = ents[:i] + ents[i+1:]
+                
+                ablation_pct = float(args.ablation_pct)
+                # print(f"ablation_pct: {ablation_pct}")
+
+                # if ablation_pct is not 1.0, we need to swap some of the prompt stimuli with unseen entities
+                if ablation_pct != 1.0:
+
+                    if ablation_pct < 0.0 or ablation_pct > 1.0:
+                        raise ValueError("ablation_pct must be between 0.0 and 1.0")
+
+                    # randomly remove a percentage of the prompt stimuli and replace with unseen entities
+                    true_ent_count = int(math.ceil(len(remaining_ents)*ablation_pct))
+                    unseen_ent_count = len(remaining_ents) - true_ent_count
+                    new_unseen_ents = random.sample(unseen_ents, unseen_ent_count)
+
+                    for i in range(len(new_unseen_ents)):
+                        while new_unseen_ents[i] in remaining_ents:
+                            new_unseen_ents[i] = random.choice(unseen_ents)
+                            print('had to swap a new unseen ent')
+                    
+                    remaining_ents = random.sample(remaining_ents, true_ent_count) + new_unseen_ents
     
                 prompt_start = PROMPT_TEMPLATE[PROMPT_TO_USE][0]
                 prompt_end = PROMPT_TEMPLATE[PROMPT_TO_USE][1]
@@ -144,8 +174,13 @@ def main():
 
     ## save results
     print('Save Results...')
-    with open(path.join(args.save_dir, f'{args.model_tag}_target_probs_prompt_{PROMPT_TO_USE}.json'), 'w') as f:
-        json.dump(results, f)
+    if ablation_pct != 1.0:
+        ablation_str = int(float(args.ablation_pct)*100)
+        with open(path.join(args.save_dir, f'{args.model_tag}_target_probs_prompt_{PROMPT_TO_USE}_{ablation_str}.json'), 'w') as f:
+            json.dump(results, f)
+    else:
+        with open(path.join(args.save_dir, f'{args.model_tag}_target_probs_prompt_{PROMPT_TO_USE}.json'), 'w') as f:
+            json.dump(results, f)
 
 if __name__ == "__main__":
     main()
