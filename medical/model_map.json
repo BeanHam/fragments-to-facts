@@ -32,7 +32,7 @@
         "shadow": {
             "job_id":"ft-72f91af4-ece9-4564-9396-d915fc4005b6",
             "model_id":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-ae125da1",
-            "api_key":""
+            "api_key":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-ae125da1-5acbc5ab"
         }
     },
     "qwen_1_epoch":{
