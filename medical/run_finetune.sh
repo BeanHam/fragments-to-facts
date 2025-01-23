@@ -7,6 +7,8 @@
 # 1. meta-llama/Meta-Llama-3.1-8B-Instruct-Reference
 # 2. Qwen/Qwen2-7B-Instruct
 # 3. mistralai/Mistral-7B-Instruct-v0.2
+# 4. meta-llama/Llama-3.2-1B-Instruct
+# 5. meta-llama/Llama-3.2-3B-Instruct
 
 # SPLIT OPTIONS:
 # 1. train
@@ -14,13 +16,13 @@
 
 UPLOAD_MAP="upload_map.json"
 WANDB_KEY="a73070a2ae35aa73562604c69dfc697278d19086"
-MODEL="meta-llama/Meta-Llama-3.1-8B-Instruct-Reference"
-SPLIT="shadow"
+MODEL="meta-llama/Llama-3.2-1B-Instruct"
+SPLIT="train"
 TRAIN_EPOCH=20  ## change to 10 for full finetuning
 EVAL_EPOCH=10
 LORA="TRUE"
 
-if [[ "$MODEL" == "meta-llama/Meta-Llama-3.1-8B-Instruct-Reference" ]]; then
+if [ "$MODEL" == "meta-llama/Meta-Llama-3.1-8B-Instruct-Reference" ] || [ "$MODEL" == "meta-llama/Llama-3.2-1B-Instruct" ] || [ "$MODEL" == "meta-llama/Llama-3.2-3B-Instruct" ]; then
   if [[ "$SPLIT" == "train" ]]; then
     TRAIN_FILE_ID=$(jq -r '."llama_train.jsonl"' "$UPLOAD_MAP")
     VAL_FILE_ID=$(jq -r '."llama_val.jsonl"' "$UPLOAD_MAP")
