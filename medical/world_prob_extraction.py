@@ -89,6 +89,8 @@ def main():
     if args.hf_key:
         hf_login(token=args.hf_key, add_to_git_credential=True)
         tokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3.1-8B-Instruct', token=args.hf_key)
+        tokenizer = AutoTokenizer.from_pretrained('mistralai/Mistral-7B-Instruct-v0.2', token=args.hf_key)
+        tokenizer = AutoTokenizer.from_pretrained('google/gemma-2b-it', token=args.hf_key)
     
     if ablation_str != 100:
         with open(path.join(args.save_dir, f'{args.model_tag}_shadow_probs_prompt_{PROMPT_TO_USE}_{ablation_str}.json'), 'r') as f:
