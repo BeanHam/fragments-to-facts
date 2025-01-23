@@ -35,23 +35,11 @@
             "api_key":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-ae125da1-5acbc5ab"
         }
     },
-    "lora_llama_1b_10_epoch":{
-        "train": {
-            "job_id":"",
-            "model_id":"",
-            "api_key":""
-        },
-        "shadow": {
-            "job_id":"",
-            "model_id":"",
-            "api_key":""
-        }
-    },
     "lora_llama_3b_10_epoch":{
         "train": {
             "job_id":"ft-a4566a37-e2c2-48e2-a79f-8efb727f0343",
             "model_id":"bh193/Llama-3.2-3B-Instruct-d11bfa14",
-            "api_key":""
+            "api_key":"bh193/Llama-3.2-3B-Instruct-d11bfa14"
         },
         "shadow": {
             "job_id":"ft-43020574-ce8a-4104-82a9-a5bf12b39e1f",
