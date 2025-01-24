@@ -44,7 +44,7 @@
         "shadow": {
             "job_id":"ft-43020574-ce8a-4104-82a9-a5bf12b39e1f",
             "model_id":"bh193/Llama-3.2-3B-Instruct-57ef84f0",
-            "api_key":""
+            "api_key":"bh193/Llama-3.2-3B-Instruct-57ef84f0"
         }
     },    
     "qwen_1_epoch":{
