@@ -347,3 +347,59 @@ def plot_category_roc(df_results, category, y_pred_proba_model,
     filename = save_path + f"/figures/{data_type}_{category}_attack_{model_name}.pdf"
     print(f"saving roc plot for category '{category}' to: {filename}")
     plt.savefig(filename, bbox_inches='tight')
+
+score_mapping = {
+    'y_pred_proba_model': {
+        'label': 'Classifier',
+        'color': 'blue',
+        'linestyle': '-',
+        'linewidth': 3
+    },
+    'lr_attack_scores': {
+        'label': 'LR-Attack',
+        'color': 'green',
+        'linestyle': '--',
+        'linewidth': 3
+    },
+    'prism_attack_scores': {
+        'label': 'PRISM',
+        'color': 'red',
+        'linestyle': '-.',
+        'linewidth': 3
+    }
+}
+
+def plot_with_ents(filtered_results, num_ents):
+    plt.style.use(['science'])
+    plt.rc('text', usetex=False)  
+
+    figsize = (6, 6)
+    plt.figure(figsize=figsize)
+
+    for score_col, style in score_mapping.items():
+        fpr, tpr, _ = roc_curve(filtered_results['label'], filtered_results[score_col])
+        auc_score = roc_auc_score(filtered_results['label'], filtered_results[score_col])
+        
+        plt.plot(
+            fpr,
+            tpr,
+            color=style['color'],
+            linestyle=style['linestyle'],
+            linewidth=style['linewidth'],
+            label=f"{style['label']} (AUC = {auc_score:.2f})"
+        )
+
+    plt.plot( [0, 1], [0, 1], color='navy', linestyle='--', linewidth=2)
+
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+
+    title = "roc curve"
+    data_type = f"num_ents range = {num_ents}"
+    percent_positive = filtered_results['label'].sum() / len(filtered_results)
+    plt.title(f"{title} ({data_type}, {percent_positive:.2f} positive)", fontsize=11)
+    plt.xlabel('FPR', fontsize=14)
+    plt.ylabel('TPR', fontsize=14)
+    plt.legend(loc="lower right", fontsize=10)
+    plt.grid(True)
+    plt.show()
