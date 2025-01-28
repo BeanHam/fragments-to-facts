@@ -3,3 +3,4 @@ __pycache__/
 .ipynb_checkpoints/
 new_eval_plots.ipynb
 llama_10_epoch_memorization_attack_results.npy
+llama_1_epoch_memorization_attack_results.npy
