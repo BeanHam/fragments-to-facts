@@ -51,7 +51,7 @@ Please deploy the following model {target_model_api_key}. The deployment might t
         start_index=text.find("<|eot_id|><|start_header_id|>user<|end_header_id|>")
         end_index=text.find("<|eot_id|><|start_header_id|>assistant<|end_header_id|>")
         conv=text[start_index+50:end_index]+'\n\n'
-        prompt=text[end_index+55:]        
+        prompt=text[end_index+55:]
         for prompt_length in [10,20,30]:
             user=conv+' '.join(prompt.split()[:prompt_length])
             gt=' '.join(prompt.split()[prompt_length:])
