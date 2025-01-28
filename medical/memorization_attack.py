@@ -1,18 +1,10 @@
-import os
-import time
 import json
-import math
-import random
 import argparse
 import numpy as np
-import pandas as pd
 from tqdm import tqdm
 from os import makedirs, path
 from together import Together
-
 from utils import *
-from huggingface_hub import login as hf_login
-from datasets import concatenate_datasets, DatasetDict, load_dataset
 
 #-----------------------
 # Main Function
@@ -26,7 +18,7 @@ def main():
     parser.add_argument('--data_dir', type=str, default='formatted_data/')
     parser.add_argument('--model_tag', type=str, default='llama_10_epoch')
     parser.add_argument('--together_key', type=str)
-    args = parser.parse_args(args=[])
+    args = parser.parse_args()
     with open('model_map.json') as f:
         model_map=json.load(f)
     client = Together(api_key=args.together_key)
