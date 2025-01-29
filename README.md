@@ -1,4 +1,8 @@
-# 2024-llm-attack
+# Fragments to Facts: Partial-Information Fragment Inference from LLMs
+
+Large language models (LLMs) can leak sensitive training data through memorization and membership inference attacks. Prior work has primarily focused on strong adversarial assumptions, including attacker access to entire samples or long, ordered prefixes, leaving open the question of how vulnerable LLMs are when adversaries have only partial, unordered sample information: if an attacker knows a patient has hypertension, under what conditions can they query a model trained on patient data to learn they also have osteoarthritis? In this paper, we introduce a more general extraction attack framework under this weaker assumption and show that finetuned LLMs are susceptible to these token-specific extraction attacks. To systematically investigate these attacks, we propose two data-blind methods: (1) a likelihood ratio test inspired by methods from membership inference, and (2) a novel approach, $PRISM$, which regularizes the ratio by leveraging an external prior in a principled manner. Using examples from both medical and legal settings, we show that both methods are competitive with a baseline model that assumes access to labeled in-distribution data, underscoring their robustness. 
+
+
 
 
 To finetune with Together AI:
@@ -16,34 +20,3 @@ together files upload PATH_TO_VAL_FILE
 
 together fine-tuning create --training-file $TRAIN_FILE_ID --model $MODEL_NAME --wandb-api-key $WANDB_API_KEY --validation-file $VAL_FILE_ID
 ```
-
-### TODOs
-1. Increase coverage of Llama results on medsum data
-   - For 1 epoch (if you're being careful about data exposure) or epochs to convergence (maybe 10 epochs? however many we need)
-   - For 1 vs. multiple shadow models (just get results for 10 shadow models)
-   - For 1 vs. multiple world models / different world model strategies
-   - With prompt (2 types) / without prompt (e.g. do we need?)
-
-2. Same results but with differentially private finetuning
-   - For 1 epoch vs 10, using the AWS instance. Just choose 2 shadow models.
-
-3. Once, Llama results are more complete, run on
-   - Gemini (?)
-   - mixtral_8x7b (?)
-   - OpenAI (?) (if possible, expensive ? )
-
-4. Finalize experiments (can do in parallel using current data)
-   - Compare the naive attack with our score with learned model
-   - Make probability observation
-  
-5. Ablations
-   - Change the number of correct / incorrect tokens in the prompt (say, 20%, 50%, 80% of tokens from the actual sample) to check how sensitive the scheme is to having EXACT overlap in the subsample with the actual sample that was trained on.
-   - Does the number of ents effect the accuracy? As in, fewer, more conditioned tokens, the better worse? We can check this from the results we have.
-
-6. Probably need new datasets
-   - Similar medical setting dataset (?)
-   - Legal
-  
-7. ROC curve baselines
-   - Classifier with JUST the information from the LR-Attack, and the classifier with JUST the information for the PRISM attack, and then the classifier with all the possible information.
-   - Classifier with the vector of ent probs
