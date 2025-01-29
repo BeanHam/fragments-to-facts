@@ -112,7 +112,7 @@ def main_runner(model_name, save_path, data_path, prompt_id=2):
                          fpr_prism = eval_results['roc_curve']['prism'][0], 
                          tpr_prism = eval_results['roc_curve']['prism'][1], 
                          roc_auc_prism = eval_results['roc_auc_prism'],
-                         title=f'Attack Scores {model_name}',
+                         title=f'{model_name}',
                          filename=f"{save_path}/figures/{data_path}_{model_name}_overall.pdf",
                          data_type=data_path)
 
@@ -148,14 +148,55 @@ def main_runner(model_name, save_path, data_path, prompt_id=2):
                               model_name,
                               save_path=save_path,
                               data_type=data_path)
+        
+        # we return the metrics for the model we just evaled
+        def tpr_at_fpr(fpr, tpr, target_fpr):
+            return np.interp(target_fpr, fpr, tpr)
 
+        fpr_model, tpr_model = eval_results['roc_curve']['model']
+        classifier_tpr2  = tpr_at_fpr(fpr_model, tpr_model, 0.02)
+        classifier_tpr10 = tpr_at_fpr(fpr_model, tpr_model, 0.10)
+        classifier_roc   = eval_results['roc_auc_model']
+
+        fpr_lr, tpr_lr = eval_results['roc_curve']['lr_attack']
+        lr_tpr2  = tpr_at_fpr(fpr_lr, tpr_lr, 0.02)
+        lr_tpr10 = tpr_at_fpr(fpr_lr, tpr_lr, 0.10)
+        lr_roc   = eval_results['roc_auc_lr_attack']
+
+        fpr_prism, tpr_prism = eval_results['roc_curve']['prism']
+        prism_tpr2  = tpr_at_fpr(fpr_prism, tpr_prism, 0.02)
+        prism_tpr10 = tpr_at_fpr(fpr_prism, tpr_prism, 0.10)
+        prism_roc   = eval_results['roc_auc_prism']
+
+        return {
+            'classifier_tpr2': classifier_tpr2,
+            'classifier_tpr10': classifier_tpr10,
+            'classifier_roc': classifier_roc,
+            'lr_tpr2': lr_tpr2,
+            'lr_tpr10': lr_tpr10,
+            'lr_roc': lr_roc,
+            'prism_tpr2': prism_tpr2,
+            'prism_tpr10': prism_tpr10,
+            'prism_roc': prism_roc
+        }
+
+            
 
 if __name__ == '__main__':
 
-    models =['llama','qwen'] # , '75_llama' 'lora_llama', 'lora_llama_3b' 'mistral', 'qwen','llama', '25_llama'
-    data_paths = ['law'] # 'law' 'medical
-    epochs = [10] # 1
+    # 10 epoch: 'llama','qwen', 'mistral', '75_llama', '50_llama', '25_llama', 'lora_llama', 'lora_llama_3b', 
+    # 1 epoch: 'llama','qwen', '75_llama', '50_llama', '25_llama'
+    # law: 'llama','qwen',
+
+    # law epoch
+    models = ['llama', 'qwen', 'mistral']
+    data_paths = ['medical']
+    epochs = [10]
     split = 2
+
+    # results dict for the generate_main_results_table
+    # TODO: fix this and the next loop so that it stores results correctly
+    model_res_dict = {}
 
     for model in models:
         for epoch in epochs:
@@ -168,10 +209,76 @@ if __name__ == '__main__':
                 # make sure directory exists for save_path
                 os.makedirs(save_path+'/figures', exist_ok=True)
 
-                main_runner(model_name, save_path, data_path)
+                # model_results_for_main_table = main_runner(model_name, save_path, data_path)
+                model_res_dict[model_name] = main_runner(model_name, save_path, data_path)
 
                 print(f"Finished {model_name} on {data_path}")
                 print("\n\n")
 
+    llama_key = 'llama_10_epoch'
+    qwen_key = 'qwen_10_epoch'
+    mistral_key = 'mistral_10_epoch'
+
+    if all(k in model_res_dict for k in [llama_key, qwen_key, mistral_key]):
+        latex_code = generate_main_results_table(
+            # classifier
+            classifier_tpr2=(
+                model_res_dict[llama_key]['classifier_tpr2'],
+                model_res_dict[qwen_key]['classifier_tpr2'],
+                model_res_dict[mistral_key]['classifier_tpr2']
+            ),
+            classifier_tpr10=(
+                model_res_dict[llama_key]['classifier_tpr10'],
+                model_res_dict[qwen_key]['classifier_tpr10'],
+                model_res_dict[mistral_key]['classifier_tpr10']
+            ),
+            classifier_roc=(
+                model_res_dict[llama_key]['classifier_roc'],
+                model_res_dict[qwen_key]['classifier_roc'],
+                model_res_dict[mistral_key]['classifier_roc']
+            ),
+
+            # lr attack
+            lrattack_tpr2=(
+                model_res_dict[llama_key]['lr_tpr2'],
+                model_res_dict[qwen_key]['lr_tpr2'],
+                model_res_dict[mistral_key]['lr_tpr2']
+            ),
+            lrattack_tpr10=(
+                model_res_dict[llama_key]['lr_tpr10'],
+                model_res_dict[qwen_key]['lr_tpr10'],
+                model_res_dict[mistral_key]['lr_tpr10']
+            ),
+            lrattack_roc=(
+                model_res_dict[llama_key]['lr_roc'],
+                model_res_dict[qwen_key]['lr_roc'],
+                model_res_dict[mistral_key]['lr_roc']
+            ),
+
+            # prism
+            prism_tpr2=(
+                model_res_dict[llama_key]['prism_tpr2'],
+                model_res_dict[qwen_key]['prism_tpr2'],
+                model_res_dict[mistral_key]['prism_tpr2']
+            ),
+            prism_tpr10=(
+                model_res_dict[llama_key]['prism_tpr10'],
+                model_res_dict[qwen_key]['prism_tpr10'],
+                model_res_dict[mistral_key]['prism_tpr10']
+            ),
+            prism_roc=(
+                model_res_dict[llama_key]['prism_roc'],
+                model_res_dict[qwen_key]['prism_roc'],
+                model_res_dict[mistral_key]['prism_roc']
+            ),
+
+            caption="Main Results Across Models (Llama, Qwen, Mistral)",
+            label="tab:main_results_all"
+        )
+
+        print("\n gen latex table:\n")
+        print(latex_code)
+    else:
+        print("not all {llama, qwen, mistral} results are present")
     
 

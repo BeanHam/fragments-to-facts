@@ -29,6 +29,23 @@ legal_category_dict = {
     "Miscellaneous": "Miscellaneous items that do not fit into the other categories."
 }
 
+model_mapping = {
+    "25_llama_1_epoch": "Llama 3 8B\n(75% Permuted, 1 Epoch, ",
+    "25_llama_10_epoch": "Llama 3 8B\n(75% Permuted, Convergence, ",
+    "50_llama_1_epoch": "Llama 3 8B\n(50% Permuted, 1 Epoch, ",
+    "50_llama_10_epoch": "Llama 3 8B\n(50% Permuted, Convergence, ",
+    "75_llama_1_epoch": "Llama 3 8B\n(25% Permuted, 1 Epoch, ",
+    "75_llama_10_epoch": "Llama 3 8B\n(25% Permuted, Convergence, ",
+    "llama_1_epoch": "Llama 3 8B\n(1 Epoch, ",
+    "llama_10_epoch": "Llama 3 8B\n(Convergence, ",
+    "lora_llama_3b_10_epoch": "Llama 3 3B LoRA Finetuned\n(Convergence, ",
+    "lora_llama_10_epoch": "Llama 3 8B LoRA Finetuned\n(Convergence, ",
+    "mistral_10_epoch": "Mistral 7B\n(Convergence, ",
+    "qwen_1_epoch": "Qwen2 7B\n(1 Epoch, ",
+    "qwen_10_epoch": "Qwen2 7B\n(Convergence, "
+}
+
+
 
 openai.api_key = "sk-proj-qa3W3yKyqgIqIr8YXHZOT3BlbkFJNLB17J7qTKF4rrdVfLDt"
 MODEL_NAME = "gpt-4o-mini"  # Or e.g. "gpt-4"
@@ -248,19 +265,19 @@ def plot_overall_roc_old(fpr_model, tpr_model, roc_auc_model,
     plt.rc('text', usetex=False)
     plt.figure(figsize=figsize)
 
-    plt.plot(fpr_model, tpr_model, color='blue', lw=3, 
+    plt.plot(fpr_model, tpr_model, color='blue', lw=1, 
              label=f'Classifier (auc = {roc_auc_model:.2f})')
-    plt.plot(fpr_lr_attack, tpr_lr_attack, color='green', lw=3, linestyle='--', 
+    plt.plot(fpr_lr_attack, tpr_lr_attack, color='green', lw=1, linestyle='--', 
              label=f'LR-Attack (auc = {roc_auc_lr_attack:.2f})')
-    plt.plot(fpr_prism, tpr_prism, color='red', lw=3, linestyle='-.', 
+    plt.plot(fpr_prism, tpr_prism, color='red', lw=1, linestyle='-.', 
              label=f'PRISM (auc = {roc_auc_prism:.2f})')
-    plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+    plt.plot([0, 1], [0, 1], color='navy', lw=0.5, linestyle='--')
 
     plt.xlim([0.0, 1.0])
     plt.ylim([0.0, 1.05])
     plt.xlabel('FPR', fontsize=14)
     plt.ylabel('TPR', fontsize=14)
-    plt.title(f"{title} ({data_type})", fontsize=12)
+    plt.title(f"{title}{data_type})", fontsize=12)
     plt.legend(loc="lower right", fontsize=10)
     plt.grid(True)
     plt.savefig(filename, bbox_inches='tight')
@@ -268,7 +285,7 @@ def plot_overall_roc_old(fpr_model, tpr_model, roc_auc_model,
 def plot_overall_roc(fpr_model, tpr_model, roc_auc_model,
                      fpr_lr_attack, tpr_lr_attack, roc_auc_lr_attack,
                      fpr_prism, tpr_prism, roc_auc_prism,
-                     title, filename, data_type='medical', figsize=(6, 6)):
+                     title, filename, data_type='medical', figsize=(4, 4)):
     
     plt.style.use(['science'])
     plt.rc('text', usetex=False)
@@ -280,14 +297,14 @@ def plot_overall_roc(fpr_model, tpr_model, roc_auc_model,
     fpr_lr_attack_plot = np.clip(fpr_lr_attack, epsilon, 1.0)
     fpr_prism_plot = np.clip(fpr_prism, epsilon, 1.0)
     
-    plt.plot(fpr_model_plot, tpr_model, color='blue', lw=3, 
+    plt.plot(fpr_model_plot, tpr_model, color='blue', lw=1.5, 
              label=f'Classifier (AUC = {roc_auc_model:.2f})')
-    plt.plot(fpr_lr_attack_plot, tpr_lr_attack, color='green', lw=3, linestyle='--', 
+    plt.plot(fpr_lr_attack_plot, tpr_lr_attack, color='green', lw=1.5, linestyle='--', 
              label=f'LR-Attack (AUC = {roc_auc_lr_attack:.2f})')
-    plt.plot(fpr_prism_plot, tpr_prism, color='red', lw=3, linestyle='-.', 
+    plt.plot(fpr_prism_plot, tpr_prism, color='red', lw=1.5, linestyle='-.', 
              label=f'PRISM (AUC = {roc_auc_prism:.2f})')
     
-    plt.plot([epsilon, 1], [epsilon, 1], color='navy', lw=2, linestyle='--')
+    plt.plot([epsilon, 1], [epsilon, 1], color='navy', lw=0.5, linestyle='--')
     
     plt.xscale('log')
     plt.yscale('log')
@@ -295,16 +312,16 @@ def plot_overall_roc(fpr_model, tpr_model, roc_auc_model,
     plt.xlim(epsilon, 1.0)
     plt.ylim(epsilon, 1.0)
     
-    plt.xlabel('FPR', fontsize=14)
-    plt.ylabel('TPR', fontsize=14)
-    plt.title(f"{title} ({data_type})", fontsize=16)
+    plt.xlabel('FPR', fontsize=11)
+    plt.ylabel('TPR', fontsize=11)
+    plt.title(f"{model_mapping[title]}{data_type})", fontsize=13)
     
     plt.xticks([1e-2, 5e-2, 1e-1, 1], ['0.01', '0.05', '0.1', '1'])
-    plt.yticks([1e-2, 5e-2, 1e-1, 1], ['0.01', '0.05', '0.1', '1'])
+    plt.yticks([1e-2, 5e-2, 1e-1, 1], ['', '0.05', '0.1', '1'])
     
-    plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+    plt.grid(True, which='both', linestyle='--', linewidth=0.3, alpha=0.5)
     
-    plt.legend(loc="lower right", fontsize=12)
+    plt.legend(loc="lower right", fontsize=11)
     
     plt.tight_layout()
     plt.savefig(filename, bbox_inches='tight')
@@ -350,7 +367,7 @@ def compute_category_metrics(df_results, categories_to_analyze, y_pred_model,
 def plot_category_roc(df_results, category, y_pred_proba_model, 
                       lr_attack_scores, prism_attack_scores, model_name, save_path,
                       data_type='medical',
-                      figsize=(6, 6)):
+                      figsize=(4, 4)):
     
     df_cat = df_results[df_results['category'] == category]
     if df_cat['label'].nunique() < 2:
@@ -384,14 +401,14 @@ def plot_category_roc(df_results, category, y_pred_proba_model,
     fpr_lr_attack_plot = np.clip(fpr_lr_attack, epsilon, 1.0)
     fpr_prism_plot = np.clip(fpr_prism, epsilon, 1.0)
 
-    plt.plot(fpr_model_plot, tpr_model, color='blue', lw=3, 
+    plt.plot(fpr_model_plot, tpr_model, color='blue', lw=1.5, 
              label=f'Classifier (AUC = {roc_auc_model:.2f})')
-    plt.plot(fpr_lr_attack_plot, tpr_lr_attack, color='green', lw=3, linestyle='--', 
+    plt.plot(fpr_lr_attack_plot, tpr_lr_attack, color='green', lw=1.5, linestyle='--', 
              label=f'LR-Attack (AUC = {roc_auc_lr_attack:.2f})')
-    plt.plot(fpr_prism_plot, tpr_prism, color='red', lw=3, linestyle='-.', 
+    plt.plot(fpr_prism_plot, tpr_prism, color='red', lw=1.5, linestyle='-.', 
              label=f'PRISM (AUC = {roc_auc_prism:.2f})')
 
-    plt.plot([epsilon, 1], [epsilon, 1], color='navy', lw=2, linestyle='--')
+    plt.plot([epsilon, 1], [epsilon, 1], color='navy', lw=0.5, linestyle='--')
 
     plt.xscale('log')
     plt.yscale('log')
@@ -399,16 +416,16 @@ def plot_category_roc(df_results, category, y_pred_proba_model,
     plt.xlim(epsilon, 1.0)
     plt.ylim(epsilon, 1.0)
 
-    plt.xlabel('FPR', fontsize=14)
-    plt.ylabel('TPR', fontsize=14)
-    plt.title(f"{category}, #P={num_pos}/{n_cat} ({data_type})", fontsize=16)
+    plt.xlabel('FPR', fontsize=11)
+    plt.ylabel('TPR', fontsize=11)
+    plt.title(f"{category}, #P={num_pos}/{n_cat} ({data_type})", fontsize=13)
 
     plt.xticks([1e-2, 5e-2, 1e-1, 1], ['0.01', '0.05', '0.1', '1'])
-    plt.yticks([1e-2, 5e-2, 1e-1, 1], ['0.01', '0.05', '0.1', '1'])
+    plt.yticks([1e-2, 5e-2, 1e-1, 1], ['', '0.05', '0.1', '1'])
 
-    plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+    plt.grid(True, which='both', linestyle='--', linewidth=0.3, alpha=0.5)
 
-    plt.legend(loc="lower right", fontsize=12)
+    plt.legend(loc="lower right", fontsize=11)
 
     plt.tight_layout()
     
@@ -472,3 +489,150 @@ def plot_with_ents(filtered_results, num_ents):
     plt.legend(loc="lower right", fontsize=10)
     plt.grid(True)
     plt.show()
+
+    import numpy as np
+import pandas as pd
+
+def generate_main_results_table(
+    # classifier
+    classifier_tpr2,   # tuple of (llama, qwen, mistral)
+    classifier_tpr10,  # tuple of (llama, qwen, mistral)
+    classifier_roc,    # tuple of (llama, qwen, mistral)
+    # lr-Attack
+    lrattack_tpr2,
+    lrattack_tpr10,
+    lrattack_roc,
+    # prism
+    prism_tpr2,
+    prism_tpr10,
+    prism_roc,
+    caption="Main Results",
+    label="tab:main_results",
+    # float_fmt=".2f",
+    largest_is_better=True
+):
+    methods = ["Classifier", "LR-Attack", "PRISM"]
+    cols = [
+        "TPR2_Llama", "TPR2_Qwen", "TPR2_Mistral",
+        "TPR10_Llama", "TPR10_Qwen", "TPR10_Mistral",
+        "ROC_Llama", "ROC_Qwen", "ROC_Mistral"
+    ]
+
+    # convert tprs to percentages
+    classifier_tpr2 = [x * 100 for x in classifier_tpr2]
+    classifier_tpr10 = [x * 100 for x in classifier_tpr10]
+    lrattack_tpr2 = [x * 100 for x in lrattack_tpr2]
+    lrattack_tpr10 = [x * 100 for x in lrattack_tpr10]
+    prism_tpr2 = [x * 100 for x in prism_tpr2]
+    prism_tpr10 = [x * 100 for x in prism_tpr10]
+
+    # clip each decimal in the tprs to 1 digit
+    classifier_tpr2 = [round(x, 1) for x in classifier_tpr2]
+    classifier_tpr10 = [round(x, 1) for x in classifier_tpr10]
+    lrattack_tpr2 = [round(x, 1) for x in lrattack_tpr2]
+    lrattack_tpr10 = [round(x, 1) for x in lrattack_tpr10]
+    prism_tpr2 = [round(x, 1) for x in prism_tpr2]
+    prism_tpr10 = [round(x, 1) for x in prism_tpr10]
+
+    # round the roc aucs to 2 digits
+    classifier_roc = [round(x, 2) for x in classifier_roc]
+    lrattack_roc = [round(x, 2) for x in lrattack_roc]
+    prism_roc = [round(x, 2) for x in prism_roc]
+
+    print("classifier_tpr2", classifier_tpr2)
+
+    data = [
+        list(classifier_tpr2) + list(classifier_tpr10) + list(classifier_roc),
+        list(lrattack_tpr2)   + list(lrattack_tpr10)   + list(lrattack_roc),
+        list(prism_tpr2)      + list(prism_tpr10)      + list(prism_roc),
+    ]
+
+    df = pd.DataFrame(data, index=methods, columns=cols)
+
+    ascending = not largest_is_better
+    ranks = df.rank(method='dense', ascending=ascending)
+
+    df_colored = df.copy()
+
+    for c in cols:
+        for row_idx in df.index:
+            val = df.loc[row_idx, c]
+            rank_val = ranks.loc[row_idx, c]
+            val_str = f"{val}"
+
+            if rank_val == 1:
+                val_str = r"\cellcolor{gold!30} \textbf{" + val_str + r"}"
+            elif rank_val == 2:
+                val_str = r"\cellcolor{silver!30}" + val_str
+            elif rank_val == 3:
+                val_str = r"\cellcolor{bronze!30}" + val_str
+
+            df_colored.loc[row_idx, c] = val_str
+
+    prob_access = {
+        "Classifier": [
+            r"\tikz\draw[black,fill=black] (0,0) circle (.5ex);",
+            r"\tikz\draw[black,fill=black] (0,0) circle (.5ex);",
+            r"\tikz\draw[black,fill=black] (0,0) circle (.5ex);",
+        ],
+        "LR-Attack": [
+            r"\tikz\draw[black,fill=black] (0,0) circle (.5ex);",
+            r"\tikz\draw[black,fill=black] (0,0) circle (.5ex);",
+            r"\tikz\draw[black,fill=white] (0,0) circle (.5ex);",
+        ],
+        "PRISM": [
+            r"\tikz\draw[black,fill=black] (0,0) circle (.5ex);",
+            r"\tikz\draw[black,fill=black] (0,0) circle (.5ex);",
+            r"\tikz\draw[black,fill=black] (0,0) circle (.5ex);",
+        ],
+    }
+
+    lines = []
+    lines.append(r"\begin{table}[ht!]")
+    lines.append(r"    \centering")
+    lines.append(r"    \small")
+    lines.append(r"    \renewcommand*{\arraystretch}{1.15}")
+    lines.append(r"    \begin{tabular}{ccccccccccccc}")
+    lines.append(
+        r"        Method &  \multicolumn{3}{c}{Prob. Access} & \multicolumn{3}{c}{TPR @ 2\% FPR} & \multicolumn{3}{c}{TPR @ 10\% FPR} & \multicolumn{3}{c}{ROC-AUC} \\ \cline{5-13}"
+    )
+    lines.append(
+        r"        & {\normalsize{$\pdata$}} & {\normalsize{$\pshadow$}} & {\normalsize{$\pworld$}} & \scriptsize{Llama 3 8B} & \scriptsize{Qwen 2 7B} & \scriptsize{Mistral 7B} & \scriptsize{Llama 3 8B} & \scriptsize{Qwen 2 7B} & \scriptsize{Mistral 7B} & \scriptsize{Llama 3 8B} & \scriptsize{Qwen 2 7B} & \scriptsize{Mistral 7B} \\ \hline"
+    )
+
+    for method in methods:
+        # circles
+        c1, c2, c3 = prob_access[method]
+
+        # numeric columns from df_colored
+        #   TPR2_Llama, TPR2_Qwen, TPR2_Mistral,
+        #   TPR10_Llama, TPR10_Qwen, TPR10_Mistral,
+        #   ROC_Llama,  ROC_Qwen,   ROC_Mistral
+        row_vals = [
+            df_colored.loc[method, "TPR2_Llama"],
+            df_colored.loc[method, "TPR2_Qwen"],
+            df_colored.loc[method, "TPR2_Mistral"],
+            df_colored.loc[method, "TPR10_Llama"],
+            df_colored.loc[method, "TPR10_Qwen"],
+            df_colored.loc[method, "TPR10_Mistral"],
+            df_colored.loc[method, "ROC_Llama"],
+            df_colored.loc[method, "ROC_Qwen"],
+            df_colored.loc[method, "ROC_Mistral"],
+        ]
+
+        line = (
+            f"        {method} & {c1} & {c2} & {c3} & "
+            f"{row_vals[0]}\% & {row_vals[1]}\% & {row_vals[2]}\% & "
+            f"{row_vals[3]}\% & {row_vals[4]}\% & {row_vals[5]}\% & "
+            f"{row_vals[6]} & {row_vals[7]} & {row_vals[8]} \\\\"
+        )
+        lines.append(line)
+
+    lines.append(r"        \hline")
+    lines.append(r"    \end{tabular}")
+    lines.append(r"    \label{" + label + r"}")
+    lines.append(r"    \caption{" + caption + r"}")
+    lines.append(r"\end{table}")
+
+    latex_code = "\n".join(lines)
+    return latex_code
