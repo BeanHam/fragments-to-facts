@@ -3,7 +3,7 @@ from sklearn.model_selection import cross_val_score, cross_val_predict, Stratifi
 from sklearn.metrics import roc_curve, roc_auc_score
 import numpy as np
 
-from evaluation.utils import *
+from utils import *
 
 SMALL_CONSTANT = 1e-12
 
@@ -152,9 +152,9 @@ def main_runner(model_name, save_path, data_path, prompt_id=2):
 
 if __name__ == '__main__':
 
-    models =['50_llama', '75_llama'] # 'lora_llama', 'lora_llama_3b' 'mistral', 'qwen','llama', '25_llama'
-    data_paths = ['medical'] # 'law' 'medical
-    epochs = [1] # 1
+    models =['llama','qwen'] # , '75_llama' 'lora_llama', 'lora_llama_3b' 'mistral', 'qwen','llama', '25_llama'
+    data_paths = ['law'] # 'law' 'medical
+    epochs = [10] # 1
     split = 2
 
     for model in models:

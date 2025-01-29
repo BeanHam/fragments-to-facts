@@ -239,7 +239,7 @@ def assign_ner_categories(df, model_name, data_type='medical'):
 
     return df
 
-def plot_overall_roc(fpr_model, tpr_model, roc_auc_model,
+def plot_overall_roc_old(fpr_model, tpr_model, roc_auc_model,
                      fpr_lr_attack, tpr_lr_attack, roc_auc_lr_attack,
                      fpr_prism, tpr_prism, roc_auc_prism,
                      title, filename, data_type='medical', figsize=(4, 4)):
@@ -264,6 +264,51 @@ def plot_overall_roc(fpr_model, tpr_model, roc_auc_model,
     plt.legend(loc="lower right", fontsize=10)
     plt.grid(True)
     plt.savefig(filename, bbox_inches='tight')
+
+def plot_overall_roc(fpr_model, tpr_model, roc_auc_model,
+                     fpr_lr_attack, tpr_lr_attack, roc_auc_lr_attack,
+                     fpr_prism, tpr_prism, roc_auc_prism,
+                     title, filename, data_type='medical', figsize=(6, 6)):
+    
+    plt.style.use(['science'])
+    plt.rc('text', usetex=False)
+    plt.figure(figsize=figsize)
+    
+    epsilon = 1e-2
+    
+    fpr_model_plot = np.clip(fpr_model, epsilon, 1.0)
+    fpr_lr_attack_plot = np.clip(fpr_lr_attack, epsilon, 1.0)
+    fpr_prism_plot = np.clip(fpr_prism, epsilon, 1.0)
+    
+    plt.plot(fpr_model_plot, tpr_model, color='blue', lw=3, 
+             label=f'Classifier (AUC = {roc_auc_model:.2f})')
+    plt.plot(fpr_lr_attack_plot, tpr_lr_attack, color='green', lw=3, linestyle='--', 
+             label=f'LR-Attack (AUC = {roc_auc_lr_attack:.2f})')
+    plt.plot(fpr_prism_plot, tpr_prism, color='red', lw=3, linestyle='-.', 
+             label=f'PRISM (AUC = {roc_auc_prism:.2f})')
+    
+    plt.plot([epsilon, 1], [epsilon, 1], color='navy', lw=2, linestyle='--')
+    
+    plt.xscale('log')
+    plt.yscale('log')
+    
+    plt.xlim(epsilon, 1.0)
+    plt.ylim(epsilon, 1.0)
+    
+    plt.xlabel('FPR', fontsize=14)
+    plt.ylabel('TPR', fontsize=14)
+    plt.title(f"{title} ({data_type})", fontsize=16)
+    
+    plt.xticks([1e-2, 5e-2, 1e-1, 1], ['0.01', '0.05', '0.1', '1'])
+    plt.yticks([1e-2, 5e-2, 1e-1, 1], ['0.01', '0.05', '0.1', '1'])
+    
+    plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+    
+    plt.legend(loc="lower right", fontsize=12)
+    
+    plt.tight_layout()
+    plt.savefig(filename, bbox_inches='tight')
+    plt.close()
 
 def plot_feature_importance(model, title='Feature Importance', figsize=(8, 6), savefig=None):
     plt.figure(figsize=figsize)
@@ -305,7 +350,7 @@ def compute_category_metrics(df_results, categories_to_analyze, y_pred_model,
 def plot_category_roc(df_results, category, y_pred_proba_model, 
                       lr_attack_scores, prism_attack_scores, model_name, save_path,
                       data_type='medical',
-                      figsize=(4,4)):
+                      figsize=(6, 6)):
     
     df_cat = df_results[df_results['category'] == category]
     if df_cat['label'].nunique() < 2:
@@ -329,24 +374,48 @@ def plot_category_roc(df_results, category, y_pred_proba_model,
     roc_auc_lr_attack = roc_auc_score(y_true, lr_attack_scores_cat)
     roc_auc_prism = roc_auc_score(y_true, prism_attack_scores_cat)
 
+    plt.style.use(['science'])
+    plt.rc('text', usetex=False)
     plt.figure(figsize=figsize)
-    plt.plot(fpr_model, tpr_model, color='blue', lw=3, label=f'Classifier (auc = {roc_auc_model:.2f})')
-    plt.plot(fpr_lr_attack, tpr_lr_attack, color='green', lw=3, linestyle='--', label=f'LR-Attack (auc = {roc_auc_lr_attack:.2f})')
-    plt.plot(fpr_prism, tpr_prism, color='red', lw=3, linestyle='-.', label=f'PRISM (auc = {roc_auc_prism:.2f})')
-    plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
 
-    plt.xlim([0.0, 1.0])
-    plt.ylim([0.0, 1.05])
+    epsilon = 1e-2  
+
+    fpr_model_plot = np.clip(fpr_model, epsilon, 1.0)
+    fpr_lr_attack_plot = np.clip(fpr_lr_attack, epsilon, 1.0)
+    fpr_prism_plot = np.clip(fpr_prism, epsilon, 1.0)
+
+    plt.plot(fpr_model_plot, tpr_model, color='blue', lw=3, 
+             label=f'Classifier (AUC = {roc_auc_model:.2f})')
+    plt.plot(fpr_lr_attack_plot, tpr_lr_attack, color='green', lw=3, linestyle='--', 
+             label=f'LR-Attack (AUC = {roc_auc_lr_attack:.2f})')
+    plt.plot(fpr_prism_plot, tpr_prism, color='red', lw=3, linestyle='-.', 
+             label=f'PRISM (AUC = {roc_auc_prism:.2f})')
+
+    plt.plot([epsilon, 1], [epsilon, 1], color='navy', lw=2, linestyle='--')
+
+    plt.xscale('log')
+    plt.yscale('log')
+
+    plt.xlim(epsilon, 1.0)
+    plt.ylim(epsilon, 1.0)
+
     plt.xlabel('FPR', fontsize=14)
     plt.ylabel('TPR', fontsize=14)
-    plt.title(f'{category}, P={num_pos}/{n_cat} ({data_type})', fontsize=13)
-    plt.legend(loc="lower right", fontsize=10)
-    plt.grid(True)
-    plt.tight_layout()
+    plt.title(f"{category}, #P={num_pos}/{n_cat} ({data_type})", fontsize=16)
 
-    filename = save_path + f"/figures/{data_type}_{category}_attack_{model_name}.pdf"
-    print(f"saving roc plot for category '{category}' to: {filename}")
+    plt.xticks([1e-2, 5e-2, 1e-1, 1], ['0.01', '0.05', '0.1', '1'])
+    plt.yticks([1e-2, 5e-2, 1e-1, 1], ['0.01', '0.05', '0.1', '1'])
+
+    plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+
+    plt.legend(loc="lower right", fontsize=12)
+
+    plt.tight_layout()
+    
+    filename = f"{save_path}/figures/{data_type}_{category}_attack_{model_name}.pdf"
+    print(f"saving ROC plot for category '{category}' to: {filename}")
     plt.savefig(filename, bbox_inches='tight')
+    plt.close()
 
 score_mapping = {
     'y_pred_proba_model': {
