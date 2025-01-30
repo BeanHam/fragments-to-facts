@@ -31,18 +31,18 @@ legal_category_dict = {
 
 model_mapping = {
     "25_llama_1_epoch": "Llama 3 8B\n(75% Permuted, 1 Epoch, ",
-    "25_llama_10_epoch": "Llama 3 8B\n(75% Permuted, Convergence, ",
+    "25_llama_10_epoch": "Llama 3 8B\n(75% Permuted, Conv., ",
     "50_llama_1_epoch": "Llama 3 8B\n(50% Permuted, 1 Epoch, ",
-    "50_llama_10_epoch": "Llama 3 8B\n(50% Permuted, Convergence, ",
+    "50_llama_10_epoch": "Llama 3 8B\n(50% Permuted, Conv., ",
     "75_llama_1_epoch": "Llama 3 8B\n(25% Permuted, 1 Epoch, ",
-    "75_llama_10_epoch": "Llama 3 8B\n(25% Permuted, Convergence, ",
+    "75_llama_10_epoch": "Llama 3 8B\n(25% Permuted, Conv., ",
     "llama_1_epoch": "Llama 3 8B\n(1 Epoch, ",
-    "llama_10_epoch": "Llama 3 8B\n(Convergence, ",
-    "lora_llama_3b_10_epoch": "Llama 3 3B LoRA Finetuned\n(Convergence, ",
-    "lora_llama_10_epoch": "Llama 3 8B LoRA Finetuned\n(Convergence, ",
-    "mistral_10_epoch": "Mistral 7B\n(Convergence, ",
+    "llama_10_epoch": "Llama 3 8B\n(Conv., ",
+    "lora_llama_3b_10_epoch": "Llama 3 3B LoRA Finetuned\n(Conv., ",
+    "lora_llama_10_epoch": "Llama 3 8B LoRA Finetuned\n(Conv., ",
+    "mistral_10_epoch": "Mistral 7B\n(Conv., ",
     "qwen_1_epoch": "Qwen2 7B\n(1 Epoch, ",
-    "qwen_10_epoch": "Qwen2 7B\n(Convergence, "
+    "qwen_10_epoch": "Qwen2 7B\n(Conv., "
 }
 
 
@@ -286,46 +286,47 @@ def plot_overall_roc(fpr_model, tpr_model, roc_auc_model,
                      fpr_lr_attack, tpr_lr_attack, roc_auc_lr_attack,
                      fpr_prism, tpr_prism, roc_auc_prism,
                      title, filename, data_type='medical', figsize=(4, 4)):
-    
+    base_font = 12.5
     plt.style.use(['science'])
     plt.rc('text', usetex=False)
+    plt.rc('font', size=base_font)
+    plt.rc('axes', titlesize=base_font - 1)
+    plt.rc('legend', fontsize=base_font - 2)
+
     plt.figure(figsize=figsize)
-    
     epsilon = 1e-2
-    
+
     fpr_model_plot = np.clip(fpr_model, epsilon, 1.0)
     fpr_lr_attack_plot = np.clip(fpr_lr_attack, epsilon, 1.0)
     fpr_prism_plot = np.clip(fpr_prism, epsilon, 1.0)
-    
-    plt.plot(fpr_model_plot, tpr_model, color='blue', lw=1.5, 
-             label=f'Classifier (AUC = {roc_auc_model:.2f})')
-    plt.plot(fpr_lr_attack_plot, tpr_lr_attack, color='green', lw=1.5, linestyle='--', 
-             label=f'LR-Attack (AUC = {roc_auc_lr_attack:.2f})')
-    plt.plot(fpr_prism_plot, tpr_prism, color='red', lw=1.5, linestyle='-.', 
-             label=f'PRISM (AUC = {roc_auc_prism:.2f})')
-    
-    plt.plot([epsilon, 1], [epsilon, 1], color='navy', lw=0.5, linestyle='--')
-    
+
+    plt.plot(fpr_model_plot, tpr_model, 'b-', lw=1.5, label=f'Classifier (AUC = {roc_auc_model:.2f})')
+    plt.plot(fpr_lr_attack_plot, tpr_lr_attack, 'g--', lw=1.5, label=f'LR-Attack (AUC = {roc_auc_lr_attack:.2f})')
+    plt.plot(fpr_prism_plot, tpr_prism, 'r-.', lw=1.5, label=f'PRISM (AUC = {roc_auc_prism:.2f})')
+
+    plt.plot([epsilon, 1], [epsilon, 1], 'navy', lw=0.5, linestyle='--')
+
     plt.xscale('log')
     plt.yscale('log')
-    
     plt.xlim(epsilon, 1.0)
     plt.ylim(epsilon, 1.0)
-    
-    plt.xlabel('FPR', fontsize=11)
-    plt.ylabel('TPR', fontsize=11)
-    plt.title(f"{model_mapping[title]}{data_type})", fontsize=13)
-    
-    plt.xticks([1e-2, 5e-2, 1e-1, 1], ['0.01', '0.05', '0.1', '1'])
-    plt.yticks([1e-2, 5e-2, 1e-1, 1], ['', '0.05', '0.1', '1'])
-    
+
+    plt.xlabel('FPR', fontsize=base_font, labelpad=3)
+    plt.ylabel('TPR', fontsize=base_font, labelpad=3)
+
+    plt.title(f"{model_mapping[title]}{data_type})", fontsize=base_font + 1)
+
+    plt.xticks([1e-2, 2e-2, 5e-2, 1e-1, 5e-1, 1.0], ['0.01', '0.02', '0.05', '0.1', '0.5', '1'])
+    plt.yticks([1e-2, 2e-2, 5e-2, 1e-1, 5e-1, 1.0], ['', '0.02', '0.05', '0.1', '0.5', '1'], rotation=90, va='center')
+
     plt.grid(True, which='both', linestyle='--', linewidth=0.3, alpha=0.5)
-    
-    plt.legend(loc="lower right", fontsize=11)
-    
+
+    plt.legend(loc="lower right")
+
     plt.tight_layout()
     plt.savefig(filename, bbox_inches='tight')
     plt.close()
+
 
 def plot_feature_importance(model, title='Feature Importance', figsize=(8, 6), savefig=None):
     plt.figure(figsize=figsize)
@@ -368,7 +369,7 @@ def plot_category_roc(df_results, category, y_pred_proba_model,
                       lr_attack_scores, prism_attack_scores, model_name, save_path,
                       data_type='medical',
                       figsize=(4, 4)):
-    
+    base_font = 12.5
     df_cat = df_results[df_results['category'] == category]
     if df_cat['label'].nunique() < 2:
         print(f"skip roc plot for category '{category}'")
@@ -416,16 +417,16 @@ def plot_category_roc(df_results, category, y_pred_proba_model,
     plt.xlim(epsilon, 1.0)
     plt.ylim(epsilon, 1.0)
 
-    plt.xlabel('FPR', fontsize=11)
-    plt.ylabel('TPR', fontsize=11)
-    plt.title(f"{category}, #P={num_pos}/{n_cat} ({data_type})", fontsize=13)
+    plt.xlabel('FPR', fontsize=base_font, labelpad=3)
+    plt.ylabel('TPR', fontsize=base_font, labelpad=3)
+    plt.title(f"{category}\n#P={num_pos}/{n_cat} ({data_type})", fontsize=13)
 
-    plt.xticks([1e-2, 5e-2, 1e-1, 1], ['0.01', '0.05', '0.1', '1'])
-    plt.yticks([1e-2, 5e-2, 1e-1, 1], ['', '0.05', '0.1', '1'])
+    plt.xticks([1e-2, 2e-2, 5e-2, 1e-1, 5e-1, 1.0], ['0.01', '0.02', '0.05', '0.1', '0.5', '1'])
+    plt.yticks([1e-2, 2e-2, 5e-2, 1e-1, 5e-1, 1.0], ['', '0.02', '0.05', '0.1', '0.5', '1'], rotation=90, va='center')
 
     plt.grid(True, which='both', linestyle='--', linewidth=0.3, alpha=0.5)
 
-    plt.legend(loc="lower right", fontsize=11)
+    plt.legend(loc="lower right", fontsize=10.5)
 
     plt.tight_layout()
     

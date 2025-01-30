@@ -188,10 +188,10 @@ if __name__ == '__main__':
     # 1 epoch: 'llama','qwen', '75_llama', '50_llama', '25_llama'
     # law: 'llama','qwen',
 
-    # law epoch
-    models = ['llama', 'qwen', 'mistral']
+    # 1 epoch
+    models = ['llama', 'qwen', '75_llama', '50_llama', '25_llama']
     data_paths = ['medical']
-    epochs = [10]
+    epochs = [1]
     split = 2
 
     # results dict for the generate_main_results_table
