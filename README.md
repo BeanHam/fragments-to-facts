@@ -5,8 +5,9 @@ Large language models (LLMs) can leak sensitive training data through memorizati
 
 ### How to Use Our Code
 
-To finetune on our medical summarization task
+To finetune on our medical summarization task: 
 ```
 cd medical
 bash run_finetune.sh
 ```
+Remember to change parameters (model, split, train_epoch, eval_epoch, lora etc.).
