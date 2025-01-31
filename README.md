@@ -8,6 +8,14 @@ Large language models (LLMs) can leak sensitive training data through memorizati
 To finetune on our medical summarization task: 
 ```
 cd medical
+export TOGETHER_API_KEY="{your_key}"
 bash run_finetune.sh
 ```
 Remember to change parameters (model, split, train_epoch, eval_epoch, lora etc.).
+
+To extract target/shadow/world model probabilities, run the following code in order:
+```
+python target_prob_extraction.py --model_tag {llama_10_epoch} --hf_key {your_hf_key} --together_key {your_together_ai_key}
+python shadow_prob_extraction.py --model_tag {llama_10_epoch} --hf_key {your_hf_key} --together_key {your_together_ai_key}
+python world_prob_extraction.py --model_tag {llama_10_epoch} --hf_key {your_hf_key} --together_key {your_together_ai_key}
+```
