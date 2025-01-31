@@ -23,3 +23,5 @@ We have cached our results for reproducibility. The results and figures can be g
 ```
 python evaluation/eval.py
 ```
+
+The code works the same for the legal setting. Replace `medical/` with `law/` in the above codes.
