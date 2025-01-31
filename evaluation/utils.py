@@ -595,7 +595,7 @@ def generate_main_results_table(
     lines.append(r"    \renewcommand*{\arraystretch}{1.15}")
     lines.append(r"    \begin{tabular}{ccccccccccccc}")
     lines.append(
-        r"        Method &  \multicolumn{3}{c}{Prob. Access} & \multicolumn{3}{c}{TPR @ 2\% FPR} & \multicolumn{3}{c}{TPR @ 10\% FPR} & \multicolumn{3}{c}{ROC-AUC} \\ \cline{5-13}"
+        r"        Method &  \multicolumn{3}{c}{Prob. Access} & \multicolumn{3}{c}{TPR @ 2\% FPR} & \multicolumn{3}{c}{TPR @ 5\% FPR} & \multicolumn{3}{c}{ROC-AUC} \\ \cline{5-13}"
     )
     lines.append(
         r"        & {\normalsize{$\pdata$}} & {\normalsize{$\pshadow$}} & {\normalsize{$\pworld$}} & \scriptsize{Llama 3 8B} & \scriptsize{Qwen 2 7B} & \scriptsize{Mistral 7B} & \scriptsize{Llama 3 8B} & \scriptsize{Qwen 2 7B} & \scriptsize{Mistral 7B} & \scriptsize{Llama 3 8B} & \scriptsize{Qwen 2 7B} & \scriptsize{Mistral 7B} \\ \hline"

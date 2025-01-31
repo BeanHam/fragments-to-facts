@@ -155,17 +155,17 @@ def main_runner(model_name, save_path, data_path, prompt_id=2):
 
         fpr_model, tpr_model = eval_results['roc_curve']['model']
         classifier_tpr2  = tpr_at_fpr(fpr_model, tpr_model, 0.02)
-        classifier_tpr10 = tpr_at_fpr(fpr_model, tpr_model, 0.10)
+        classifier_tpr10 = tpr_at_fpr(fpr_model, tpr_model, 0.05)
         classifier_roc   = eval_results['roc_auc_model']
 
         fpr_lr, tpr_lr = eval_results['roc_curve']['lr_attack']
         lr_tpr2  = tpr_at_fpr(fpr_lr, tpr_lr, 0.02)
-        lr_tpr10 = tpr_at_fpr(fpr_lr, tpr_lr, 0.10)
+        lr_tpr10 = tpr_at_fpr(fpr_lr, tpr_lr, 0.05)
         lr_roc   = eval_results['roc_auc_lr_attack']
 
         fpr_prism, tpr_prism = eval_results['roc_curve']['prism']
         prism_tpr2  = tpr_at_fpr(fpr_prism, tpr_prism, 0.02)
-        prism_tpr10 = tpr_at_fpr(fpr_prism, tpr_prism, 0.10)
+        prism_tpr10 = tpr_at_fpr(fpr_prism, tpr_prism, 0.05)
         prism_roc   = eval_results['roc_auc_prism']
 
         return {
@@ -189,9 +189,9 @@ if __name__ == '__main__':
     # law: 'llama','qwen',
 
     # 1 epoch
-    models = ['llama', 'qwen', '75_llama', '50_llama', '25_llama']
+    models = ['llama', 'qwen', 'mistral']
     data_paths = ['medical']
-    epochs = [1]
+    epochs = [10]
     split = 2
 
     # results dict for the generate_main_results_table
