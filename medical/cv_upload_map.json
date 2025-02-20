@@ -1,0 +1,98 @@
+{
+    "llama": {
+      "0": {
+        "shadow_train.jsonl": "file-1b31240f-1f53-41ad-a66e-9eaf4ffae766",
+        "shadow_val.jsonl": "file-0ce2e76c-7e3f-4586-b22e-7dec2632fc6d",
+        "train.jsonl": "file-8fabee7f-0b2c-4b1a-a19e-85025d75adbe",
+        "val.jsonl": "file-925a1a42-62b3-4a43-a03a-084322b359e2"
+      },
+      "1": {
+        "shadow_train.jsonl": "file-6ed1b806-6d92-4ad6-8e9b-bfa029b102e7",
+        "shadow_val.jsonl": "file-cfa56a0d-2029-4720-8d9c-98eac5b5d4fa",
+        "train.jsonl": "file-4fa9308e-61ec-4104-89e5-7421681d4556",
+        "val.jsonl": "file-0d55d57e-5e7d-4c5a-8d0b-4474ab615d71"
+      },
+      "2": {
+        "shadow_train.jsonl": "file-c0c12c13-26ed-4801-87b2-81858373db01",
+        "shadow_val.jsonl": "file-457fc88e-b5af-4705-8f1c-2a7acbba6901",
+        "train.jsonl": "file-705a2a07-37dc-4658-a105-a117a377ede1",
+        "val.jsonl": "file-d2068114-dfb2-486a-be2d-8ce37c5cf7d4"
+      },
+      "3": {
+        "shadow_train.jsonl": "file-e7fbc037-9346-4327-8053-8f5a12a38516",
+        "shadow_val.jsonl": "file-19b2ad12-f5c3-4a97-9c9f-cc50df062c56",
+        "train.jsonl": "file-2f3c3f42-ce43-4d79-a623-733168e833de",
+        "val.jsonl": "file-8c2f6451-fad8-467c-bcaf-778c82751175"
+      },
+      "4": {
+        "shadow_train.jsonl": "file-36ac3979-6814-4bf0-96fa-bf6985332a2d",
+        "shadow_val.jsonl": "file-833e050d-288d-4726-970d-d7b20d2e5ec3",
+        "train.jsonl": "file-1a92627a-ec82-4d47-b2f8-8c9856d1fd39",
+        "val.jsonl": "file-80aca373-a9fe-4e30-b06f-74572482dee5"
+      }
+    },
+    "mistral": {
+      "0": {
+        "shadow_train.jsonl": "file-c5d06765-98eb-4c71-b1b6-ab26dd46265e",
+        "shadow_val.jsonl": "file-3e04e5e8-8f90-4872-bd86-fb7d18ef3411",
+        "train.jsonl": "file-ea904d9e-ed13-4ef9-b620-4befc1a4a709",
+        "val.jsonl": "file-a8c547b0-140c-444d-be30-fb60fe9cd04f"
+      },
+      "1": {
+        "shadow_train.jsonl": "file-7275e810-6aa9-4f16-a9e1-9b7d15d861b0",
+        "shadow_val.jsonl": "file-1ee7d488-161c-49e6-b1ee-59e04d7484cf",
+        "train.jsonl": "file-8a7f5717-363b-4db5-b88d-2cce941c8b02",
+        "val.jsonl": "file-a1170eff-bf1c-4d06-a7d7-19925884a88b"
+      },
+      "2": {
+        "shadow_train.jsonl": "file-e0ab4bd0-138d-4366-a91e-dd7cab045512",
+        "shadow_val.jsonl": "file-6bce7f33-af7a-4df0-b976-3a56f2cb0d85",
+        "train.jsonl": "file-9d5c7bd1-ef68-45c0-b758-c5e688986974",
+        "val.jsonl": "file-dedb0409-7a6c-418d-bedf-69be114bbfac"
+      },
+      "3": {
+        "shadow_train.jsonl": "file-8f18aa32-1854-4c88-ad9c-30cc964f0a10",
+        "shadow_val.jsonl": "file-bb84066a-68e5-41d9-aeb8-96cb0ba8f76b",
+        "train.jsonl": "file-f5b01827-1a1f-4438-8caa-ba0ecd79abbf",
+        "val.jsonl": "file-aec36a8c-8b79-40c2-8304-554bf168bea2"
+      },
+      "4": {
+        "shadow_train.jsonl": "file-978850e6-9036-498f-9054-d52a74a48435",
+        "shadow_val.jsonl": "file-e5c5ad5c-8568-41db-8e4d-a02252ddb3d3",
+        "train.jsonl": "file-8361a25c-027b-4a0d-a9c1-627da750ac60",
+        "val.jsonl": "file-86e88286-24de-46f4-98d1-6bfcd31cdf8c"
+      }
+    },
+    "qwen": {
+      "0": {
+        "shadow_train.jsonl": "file-a3cffad3-507c-4fd9-96f9-8522811dce5d",
+        "shadow_val.jsonl": "file-f2d209ed-de89-423e-b971-fea0812e3930",
+        "train.jsonl": "file-f29e67e0-4a3f-4e86-be67-aaf06b7faf94",
+        "val.jsonl": "file-10cb718c-4cf8-4aee-a695-9b1d6f189277"
+      },
+      "1": {
+        "shadow_train.jsonl": "file-1620f443-2105-42c4-bfb5-0b2cad0e6f64",
+        "shadow_val.jsonl": "file-a626941f-7381-4d5e-8905-eb27e4d75c51",
+        "train.jsonl": "file-ca8e5b69-bce0-4135-9f7d-4a2df8c4696e",
+        "val.jsonl": "file-700a249f-2d04-4b05-835a-52d345981108"
+      },
+      "2": {
+        "shadow_train.jsonl": "file-5e852421-75ca-409e-bd36-010d0c5fca5f",
+        "shadow_val.jsonl": "file-46cece16-2ba0-4cd2-b8c5-c0f77f48b8d5",
+        "train.jsonl": "file-d171b7cc-f8cc-4997-8a99-c48f89ee5407",
+        "val.jsonl": "file-610504c9-8ae8-41a3-a69a-871b739a61be"
+      },
+      "3": {
+        "shadow_train.jsonl": "file-2fd5a7a0-2d35-416d-b9c7-f573591d4d29",
+        "shadow_val.jsonl": "file-77295f77-c1cd-425c-a22e-eef4a554183d",
+        "train.jsonl": "file-4dfe1e41-317f-4c2c-b948-8d028e55a8d5",
+        "val.jsonl": "file-561d70d7-3eea-4291-b2d1-e1b6cf651bbc"
+      },
+      "4": {
+        "shadow_train.jsonl": "file-244f18a8-f0ff-457f-bab8-0ead7ec4e9ef",
+        "shadow_val.jsonl": "file-09e99905-95b4-4faf-9ed4-bb64255a9925",
+        "train.jsonl": "file-627e32da-6fe7-4cc3-a34d-aa43169b6a86",
+        "val.jsonl": "file-317c6425-c7ad-4b1c-8187-5e2eb5eda809"
+      }
+    }
+}
