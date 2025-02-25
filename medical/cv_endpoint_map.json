@@ -1,0 +1,10 @@
+{
+  "mistral": {
+    "0": {
+      "train": {
+        "finetuned_model": "bh193/Mistral-7B-Instruct-v0.2-086d8308",
+        "endpoint_id": "endpoint-705513fe-a2f0-4e30-b297-868a2a0961e4"
+      }
+    }
+  }
+}
