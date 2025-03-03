@@ -1,6 +1,8 @@
 {
-"mistral": {
-    "0": {"train": "bh193/Mistral-7B-Instruct-v0.2-086d8308"}
+  "llama": {
+    "0": {
+      "train": "bh193/Meta-Llama-3.1-8B-Instruct-Reference-a1a67513",
+      "shadow": "bh193/Meta-Llama-3.1-8B-Instruct-Reference-d5d90838"
     }
+  }
 }
-
