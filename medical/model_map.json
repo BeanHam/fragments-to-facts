@@ -23,6 +23,18 @@
             "api_key":"bh193/Meta-Llama-3.1-8B-Instruct-Reference-b94c936b-e5686d65"
         }
     },
+    "llama_70b_10_epoch":{
+        "train": {
+            "job_id":"ft-78498a37-1675",
+            "model_id":"",
+            "api_key":""
+        },
+        "shadow": {
+            "job_id":"",
+            "model_id":"",
+            "api_key":""
+        }
+    },
     "lora_llama_10_epoch":{
         "train": {
             "job_id":"ft-2675b26e-0ae6-40af-92c5-dc06c59def02",
