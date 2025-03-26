@@ -8,3 +8,4 @@ transformers
 together==1.3.5
 scikit-learn
 openai==0.28
+deepeval
