@@ -31,7 +31,7 @@
         },
         "shadow": {
             "job_id":"ft-d2de2115-9078",
-            "model_id":"",
+            "model_id":"bh193/Meta-Llama-3.1-70B-Instruct-Reference-725a8f50",
             "api_key":""
         }
     },
