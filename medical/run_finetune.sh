@@ -10,19 +10,22 @@
 # 4. meta-llama/Llama-3.2-1B-Instruct
 # 5. meta-llama/Llama-3.2-3B-Instruct
 
+# For Ablation Study
+# 6. meta-llama/Meta-Llama-3.1-70B-Instruct-Reference
+
 # SPLIT OPTIONS:
 # 1. train
 # 2. shadow
 
 UPLOAD_MAP="upload_map.json"
 WANDB_KEY="a73070a2ae35aa73562604c69dfc697278d19086"
-MODEL="meta-llama/Llama-3.2-1B-Instruct"
-SPLIT="train"
-TRAIN_EPOCH=20  ## change to 10 for full finetuning
-EVAL_EPOCH=10
-LORA="TRUE"
+MODEL="meta-llama/Meta-Llama-3.1-70B-Instruct-Reference"
+SPLIT="shadow"
+TRAIN_EPOCH=5  ## change to 10 for full finetuning
+EVAL_EPOCH=5
+LORA="FALSE"
 
-if [ "$MODEL" == "meta-llama/Meta-Llama-3.1-8B-Instruct-Reference" ] || [ "$MODEL" == "meta-llama/Llama-3.2-1B-Instruct" ] || [ "$MODEL" == "meta-llama/Llama-3.2-3B-Instruct" ]; then
+if [ "$MODEL" == "meta-llama/Meta-Llama-3.1-8B-Instruct-Reference" ] || [ "$MODEL" == "meta-llama/Llama-3.2-1B-Instruct" ] || [ "$MODEL" == "meta-llama/Llama-3.2-3B-Instruct" ] || [ "$MODEL" == "meta-llama/Meta-Llama-3.1-70B-Instruct-Reference" ]; then
   if [[ "$SPLIT" == "train" ]]; then
     TRAIN_FILE_ID=$(jq -r '."llama_train.jsonl"' "$UPLOAD_MAP")
     VAL_FILE_ID=$(jq -r '."llama_val.jsonl"' "$UPLOAD_MAP")
@@ -68,5 +71,6 @@ else
     --wandb-api-key "$WANDB_KEY" \
     --validation-file "$VAL_FILE_ID" \
     --n-epochs "$TRAIN_EPOCH" \
-    --n-evals "$EVAL_EPOCH"
+    --n-evals "$EVAL_EPOCH" \
+    --no-lora
 fi    
