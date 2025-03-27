@@ -106,7 +106,7 @@ def main():
         with open(path.join(args.save_dir, f'{args.model_tag}_world_probs_prompt_{PROMPT_TO_USE}_{ablation_str}_deepseek.json'), 'w') as f:
             json.dump(all_probs, f)
     else:
-        with open(path.join(args.save_dir, f'{args.model_tag}_world_probs_prompt_{PROMPT_TO_USE}_deepseek.json'), 'w') as f:
+        with open(path.join(args.save_dir, f'{args.model_tag}_world_probs_prompt_{PROMPT_TO_USE}_deepseek_r1.json'), 'w') as f:
             json.dump(all_probs, f)
 
 if __name__ == "__main__":
