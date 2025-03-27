@@ -25,7 +25,7 @@ def main():
 
     # Call MMLU benchmark
     benchmark = MMLU(
-        tasks=[MMLUTask.HIGH_SCHOOL_COMPUTER_SCIENCE],
+        # tasks=[MMLUTask.HIGH_SCHOOL_COMPUTER_SCIENCE],
         n_shots=args.shots
     )
 
