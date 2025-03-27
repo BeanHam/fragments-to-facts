@@ -97,8 +97,8 @@
     } ,
     "mistral_10_8x7b_epoch":{
         "train": {
-            "job_id":"ft-6517de22-ad18",
-            "model_id": "",
+            "job_id":"ft-a7d1982d-1b25",
+            "model_id": "bh193/Mixtral-8x7B-Instruct-v0.1-fb74a99a",
             "api_key": ""
         },
         "shadow": {
