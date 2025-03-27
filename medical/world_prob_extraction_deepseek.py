@@ -88,7 +88,7 @@ def main():
     ## log in together ai & hugginface
     if args.hf_key:
         hf_login(token=args.hf_key, add_to_git_credential=True)
-        tokenizer = AutoTokenizer.from_pretrained('deepseek-ai/DeepSeek-V3', token=args.hf_key)
+        tokenizer = AutoTokenizer.from_pretrained('deepseek-ai/DeepSeek-R1', token=args.hf_key)
     
     if ablation_str != 100:
         with open(path.join(args.save_dir, f'{args.model_tag}_shadow_probs_prompt_{PROMPT_TO_USE}_{ablation_str}.json'), 'r') as f:
