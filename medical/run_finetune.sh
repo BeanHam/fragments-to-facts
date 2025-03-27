@@ -12,6 +12,7 @@
 
 # For Ablation Study
 # 6. meta-llama/Meta-Llama-3.1-70B-Instruct-Reference
+# 7. mistralai/Mixtral-8x7B-Instruct-v0.1
 
 # SPLIT OPTIONS:
 # 1. train
@@ -19,10 +20,10 @@
 
 UPLOAD_MAP="upload_map.json"
 WANDB_KEY="a73070a2ae35aa73562604c69dfc697278d19086"
-MODEL="meta-llama/Meta-Llama-3.1-70B-Instruct-Reference"
+MODEL="mistralai/Mixtral-8x7B-Instruct-v0.1"
 SPLIT="shadow"
-TRAIN_EPOCH=5  ## change to 10 for full finetuning
-EVAL_EPOCH=5
+TRAIN_EPOCH=1  ## change to 10 for full finetuning
+EVAL_EPOCH=1
 LORA="FALSE"
 
 if [ "$MODEL" == "meta-llama/Meta-Llama-3.1-8B-Instruct-Reference" ] || [ "$MODEL" == "meta-llama/Llama-3.2-1B-Instruct" ] || [ "$MODEL" == "meta-llama/Llama-3.2-3B-Instruct" ] || [ "$MODEL" == "meta-llama/Meta-Llama-3.1-70B-Instruct-Reference" ]; then
@@ -33,7 +34,7 @@ if [ "$MODEL" == "meta-llama/Meta-Llama-3.1-8B-Instruct-Reference" ] || [ "$MODE
     TRAIN_FILE_ID=$(jq -r '."llama_shadow_train.jsonl"' "$UPLOAD_MAP")
     VAL_FILE_ID=$(jq -r '."llama_shadow_val.jsonl"' "$UPLOAD_MAP")
   fi
-elif [[ "$MODEL" == "mistralai/Mistral-7B-Instruct-v0.2" ]]; then
+elif [ "$MODEL" == "mistralai/Mistral-7B-Instruct-v0.2" ] || [ "$MODEL" == "mistralai/Mixtral-8x7B-Instruct-v0.1" ]; then
   if [[ "$SPLIT" == "train" ]]; then
     TRAIN_FILE_ID=$(jq -r '."mistral_train.jsonl"' "$UPLOAD_MAP")
     VAL_FILE_ID=$(jq -r '."mistral_val.jsonl"' "$UPLOAD_MAP")
@@ -41,7 +42,7 @@ elif [[ "$MODEL" == "mistralai/Mistral-7B-Instruct-v0.2" ]]; then
     TRAIN_FILE_ID=$(jq -r '."mistral_shadow_train.jsonl"' "$UPLOAD_MAP")
     VAL_FILE_ID=$(jq -r '."mistral_shadow_val.jsonl"' "$UPLOAD_MAP")
   fi
-elif [[ "$MODEL" == "Qwen/Qwen2-7B-Instruct" ]]; then
+elif [ "$MODEL" == "Qwen/Qwen2-7B-Instruct" ] || [ "$MODEL" == "Qwen/Qwen2-72B-Instruct" ]; then
   if [[ "$SPLIT" == "train" ]]; then
     TRAIN_FILE_ID=$(jq -r '."qwen_train.jsonl"' "$UPLOAD_MAP")
     VAL_FILE_ID=$(jq -r '."qwen_val.jsonl"' "$UPLOAD_MAP")

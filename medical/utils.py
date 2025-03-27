@@ -58,8 +58,9 @@ class GenerateNextTokenProbAPI:
     def __init__(self, api_client, model_name):
         self.api_client = api_client
         self.model_name = model_name
-        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
-
+        #self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+        self.tokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3.1-8B-Instruct')
+        
     def find_target_in_tokens(self, target_string, tokens):
         # print('finding target string in tokens')
         reconstructed_text = ''.join(tokens).replace(' ', '').replace('Ġ', '')
