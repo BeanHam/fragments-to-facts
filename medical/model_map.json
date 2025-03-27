@@ -99,12 +99,12 @@
         "train": {
             "job_id":"ft-a7d1982d-1b25",
             "model_id": "bh193/Mixtral-8x7B-Instruct-v0.1-fb74a99a",
-            "api_key": ""
+            "api_key": "bh193/Mixtral-8x7B-Instruct-v0.1-fb74a99a-ecd36e02"
         },
         "shadow": {
-            "job_id": "",
-            "model_id": "",
-            "api_key": ""
+            "job_id": "ft-9aa83d6e-3eaf",
+            "model_id": "bh193/Mixtral-8x7B-Instruct-v0.1-51125460",
+            "api_key": "bh193/Mixtral-8x7B-Instruct-v0.1-51125460-bb37f0a2"
         }
     }
 }
