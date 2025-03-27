@@ -97,7 +97,7 @@ def main():
         with open(path.join(args.save_dir, f'{args.model_tag}_shadow_probs_prompt_{PROMPT_TO_USE}.json'), 'r') as f:
             all_probs = json.load(f)
     client = Together(api_key=args.together_key)
-    world_model_endpoints = ["deepseek-ai/DeepSeek-V3"]
+    world_model_endpoints = ["deepseek-ai/DeepSeek-R1"]
     add_model_probs(all_probs, client, world_model_endpoints, [], model_type='world')
 
     ## save results
