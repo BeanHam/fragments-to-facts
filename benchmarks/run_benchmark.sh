@@ -1,20 +1,23 @@
 # Initialize default values
 model_name=""
 model_type=""
+shots=0
 
 reference_model="meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"
 
 # Parse options using getopts
-while getopts ":m:t:" opt; do
+while getopts ":m:t:s:" opt; do
   case $opt in
     m) model_name="$OPTARG"
        ;;
     t) model_type="$OPTARG"
        ;;
-    \?) echo "Invalid option -$OPTARG" >&2
+    s) shots="$OPTARG"
+       ;;
+    \?) echo "Invalid option -$OPTARG" >&3
         exit 1
         ;;
-    :) echo "Option -$OPTARG requires an argument." >&2
+    :) echo "Option -$OPTARG requires an argument." >&3
        exit 1
        ;;
   esac
@@ -88,7 +91,7 @@ conda activate private_llms
 echo "Active environment: $CONDA_DEFAULT_ENV"
 
 # Run MMLU script
-python mmlu.py --model_key $target --together_key $TOGETHER_API_KEY --model_tag $model_name
+python mmlu.py --model_key $target --together_key $TOGETHER_API_KEY --model_tag $model_name --shots $shots
 
 # If target model, stop endpoint
 if [[ $model_type == "target" ]]; then
