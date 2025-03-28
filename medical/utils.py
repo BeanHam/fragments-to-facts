@@ -59,9 +59,9 @@ class GenerateNextTokenProbAPI:
         self.api_client = api_client
         self.model_name = model_name
         #self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
-        if 'Meta-Llama-3.1-8B-Instruct-Reference' in model_name:        
+        if 'Meta-Llama-3.1-8B-Instruct' in model_name:        
             self.tokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3.1-8B-Instruct')
-        elif 'Llama-3.3-70B-Instruct-Reference' in model_name:        
+        elif 'Llama-3.3-70B-Instruct' in model_name:        
             #self.tokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3.1-8B-Instruct')
             self.tokenizer = AutoTokenizer.from_pretrained('meta-llama/Llama-3.3-70B-Instruct')
         elif 'Qwen2-7B-Instruct' in model_name:
