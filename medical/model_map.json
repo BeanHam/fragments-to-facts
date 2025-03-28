@@ -25,13 +25,13 @@
     },
     "llama_70b_10_epoch":{
         "train": {
-            "job_id":"ft-78498a37-1675",
-            "model_id":"bh193/Meta-Llama-3.1-70B-Instruct-Reference-c85c1e5e",
+            "job_id":"",
+            "model_id":"",
             "api_key":""
         },
         "shadow": {
-            "job_id":"ft-d2de2115-9078",
-            "model_id":"bh193/Meta-Llama-3.1-70B-Instruct-Reference-725a8f50",
+            "job_id":"",
+            "model_id":"",
             "api_key":""
         }
     },
@@ -93,18 +93,6 @@
             "job_id": "ft-47ee49b0-8322-49d6-b125-d301e42ddb13",
             "model_id": "bh193/Mistral-7B-Instruct-v0.2-35747b8e",
             "api_key": "bh193/Mistral-7B-Instruct-v0.2-35747b8e-be8b946a"
-        }
-    } ,
-    "mistral_8x7b_10_epoch":{
-        "train": {
-            "job_id":"ft-a7d1982d-1b25",
-            "model_id": "bh193/Mixtral-8x7B-Instruct-v0.1-fb74a99a",
-            "api_key": "bh193/Mixtral-8x7B-Instruct-v0.1-fb74a99a-ecd36e02"
-        },
-        "shadow": {
-            "job_id": "ft-9aa83d6e-3eaf",
-            "model_id": "bh193/Mixtral-8x7B-Instruct-v0.1-51125460",
-            "api_key": "bh193/Mixtral-8x7B-Instruct-v0.1-51125460-bb37f0a2"
         }
     }
 }
