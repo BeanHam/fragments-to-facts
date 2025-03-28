@@ -11,7 +11,7 @@
 # 5. meta-llama/Llama-3.2-3B-Instruct
 
 # For Ablation Study
-# 6. meta-llama/Meta-Llama-3.1-70B-Instruct-Reference
+# 6. meta-llama/Llama-3.3-70B-Instruct-Reference
 # 7. mistralai/Mixtral-8x7B-Instruct-v0.1
 
 # SPLIT OPTIONS:
@@ -20,13 +20,13 @@
 
 UPLOAD_MAP="upload_map.json"
 WANDB_KEY="a73070a2ae35aa73562604c69dfc697278d19086"
-MODEL="mistralai/Mixtral-8x7B-Instruct-v0.1"
+MODEL="meta-llama/Llama-3.3-70B-Instruct-Reference"
 SPLIT="shadow"
-TRAIN_EPOCH=1  ## change to 10 for full finetuning
-EVAL_EPOCH=1
+TRAIN_EPOCH=5  ## change to 10 for full finetuning
+EVAL_EPOCH=5
 LORA="FALSE"
 
-if [ "$MODEL" == "meta-llama/Meta-Llama-3.1-8B-Instruct-Reference" ] || [ "$MODEL" == "meta-llama/Llama-3.2-1B-Instruct" ] || [ "$MODEL" == "meta-llama/Llama-3.2-3B-Instruct" ] || [ "$MODEL" == "meta-llama/Meta-Llama-3.1-70B-Instruct-Reference" ]; then
+if [ "$MODEL" == "meta-llama/Meta-Llama-3.1-8B-Instruct-Reference" ] || [ "$MODEL" == "meta-llama/Llama-3.2-1B-Instruct" ] || [ "$MODEL" == "meta-llama/Llama-3.2-3B-Instruct" ] || [ "$MODEL" == "meta-llama/Llama-3.3-70B-Instruct-Reference" ]; then
   if [[ "$SPLIT" == "train" ]]; then
     TRAIN_FILE_ID=$(jq -r '."llama_train.jsonl"' "$UPLOAD_MAP")
     VAL_FILE_ID=$(jq -r '."llama_val.jsonl"' "$UPLOAD_MAP")
