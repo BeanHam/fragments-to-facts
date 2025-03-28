@@ -25,13 +25,14 @@
     },
     "llama_70b_10_epoch":{
         "train": {
-            "job_id":"",
-            "model_id":"",
-            "api_key":""
+            "job_id":"ft-a517e464-cc54",
+            "model_id":"bh193/Llama-3.3-70B-Instruct-Reference-539ff661",
+            "api_key":"bh193/Llama-3.3-70B-Instruct-Reference-539ff661-a7e48f94",
+            "id": "endpoint-c758b6a2-a33c-4312-b074-5f95030e9388"
         },
         "shadow": {
-            "job_id":"",
-            "model_id":"",
+            "job_id":"ft-e411ba8c-5d3f",
+            "model_id":"bh193/Llama-3.3-70B-Instruct-Reference-1a3fb91f",
             "api_key":""
         }
     },
