@@ -95,7 +95,7 @@
             "api_key": "bh193/Mistral-7B-Instruct-v0.2-35747b8e-be8b946a"
         }
     } ,
-    "mistral_10_8x7b_epoch":{
+    "mistral_8x7b_10_epoch":{
         "train": {
             "job_id":"ft-a7d1982d-1b25",
             "model_id": "bh193/Mixtral-8x7B-Instruct-v0.1-fb74a99a",
