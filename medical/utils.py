@@ -70,7 +70,9 @@ class GenerateNextTokenProbAPI:
             self.tokenizer = AutoTokenizer.from_pretrained('mistralai/Mistral-7B-Instruct-v0.2')
         elif 'Mixtral-8x7B-Instruct-v0.1' in model_name:
             self.tokenizer = AutoTokenizer.from_pretrained('mistralai/Mixtral-8x7B-Instruct-v0.1')
-    
+        else:
+            self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+            
     def find_target_in_tokens(self, target_string, tokens):
         # print('finding target string in tokens')
         reconstructed_text = ''.join(tokens).replace(' ', '').replace('Ġ', '')
