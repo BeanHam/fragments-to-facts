@@ -33,7 +33,8 @@
         "shadow": {
             "job_id":"ft-e411ba8c-5d3f",
             "model_id":"bh193/Llama-3.3-70B-Instruct-Reference-1a3fb91f",
-            "api_key":""
+            "api_key":"bh193/Llama-3.3-70B-Instruct-Reference-1a3fb91f-b26511c1",
+            "id": "endpoint-ff1d11e4-d2ef-4ab9-a293-6525b0272828"
         }
     },
     "lora_llama_10_epoch":{
