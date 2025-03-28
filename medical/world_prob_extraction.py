@@ -102,9 +102,7 @@ def main():
     world_model_endpoints = [
         "google/gemma-2b-it",
         "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
-        "mistralai/Mistral-7B-Instruct-v0.2",
-        "deepseek-ai/DeepSeek-V3",
-        "deepseek-ai/DeepSeek-R1"
+        "mistralai/Mistral-7B-Instruct-v0.2"
     ]
     
     print('Add World Probs...')
