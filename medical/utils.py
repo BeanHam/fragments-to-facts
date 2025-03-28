@@ -59,8 +59,15 @@ class GenerateNextTokenProbAPI:
         self.api_client = api_client
         self.model_name = model_name
         #self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
-        self.tokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3.1-8B-Instruct')
-        
+        if 'Meta-Llama-3.1-8B-Instruct-Reference' in model_name:        
+            self.tokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3.1-8B-Instruct')
+        elif 'Qwen2-7B-Instruct' in model_name:
+            self.tokenizer = AutoTokenizer.from_pretrained('Qwen/Qwen2-7B-Instruct')
+        elif 'Mistral-7B-Instruct-v0.2' in model_name:
+            self.tokenizer = AutoTokenizer.from_pretrained('mistralai/Mistral-7B-Instruct-v0.2')
+        elif 'Mixtral-8x7B-Instruct-v0.1' in model_name:
+            self.tokenizer = AutoTokenizer.from_pretrained('mistralai/Mixtral-8x7B-Instruct-v0.1')
+    
     def find_target_in_tokens(self, target_string, tokens):
         # print('finding target string in tokens')
         reconstructed_text = ''.join(tokens).replace(' ', '').replace('Ġ', '')
