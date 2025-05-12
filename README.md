@@ -34,5 +34,3 @@ We have cached our results for reproducibility. The results and figures can be g
 ## Remember to change parameters (model, epoch etc. in the file)
 python evaluation/eval_pipeline.py
 ```
-
-The code works the same for the legal setting. Replace `medical/` with `law/` in the above codes.
