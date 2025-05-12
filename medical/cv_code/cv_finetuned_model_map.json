@@ -1,8 +1,0 @@
-{
-  "llama": {
-    "0": {
-      "train": "bh193/Meta-Llama-3.1-8B-Instruct-Reference-a1a67513",
-      "shadow": "bh193/Meta-Llama-3.1-8B-Instruct-Reference-d5d90838"
-    }
-  }
-}

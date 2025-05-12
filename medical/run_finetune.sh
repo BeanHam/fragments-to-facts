@@ -10,19 +10,18 @@
 # 4. meta-llama/Llama-3.2-1B-Instruct
 # 5. meta-llama/Llama-3.2-3B-Instruct
 
-# For Ablation Study
-# 6. meta-llama/Llama-3.3-70B-Instruct-Reference
-# 7. mistralai/Mixtral-8x7B-Instruct-v0.1
-
 # SPLIT OPTIONS:
 # 1. train
 # 2. shadow
 
+# run 
+# export TOGETHER_API_KEY="{your_key}"
+
 UPLOAD_MAP="upload_map.json"
-WANDB_KEY="a73070a2ae35aa73562604c69dfc697278d19086"
-MODEL="meta-llama/Llama-3.3-70B-Instruct-Reference"
-SPLIT="shadow"
-TRAIN_EPOCH=5  ## change to 10 for full finetuning
+WANDB_KEY="{your_key_here}"
+MODEL="{model_name_here}"
+SPLIT="train"
+TRAIN_EPOCH=5
 EVAL_EPOCH=5
 LORA="FALSE"
 
@@ -55,7 +54,6 @@ fi
 
 if [ "$LORA" == "TRUE" ]; then
   ## lora finetuning
-  ## for ablation study
   together fine-tuning create \
     --training-file "$TRAIN_FILE_ID" \
     --model "$MODEL" \

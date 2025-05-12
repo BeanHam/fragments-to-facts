@@ -23,9 +23,7 @@ def main():
         model_map=json.load(f)
     client = Together(api_key=args.together_key)
     target_model_api_key = model_map[args.model_tag]['train']['api_key']
-    input(f"""======================================================================================================================================================
-Please deploy the following model {target_model_api_key}. The deployment might take up to 10 mins. Once the model is deployed, please proceed...
-======================================================================================================================================================""")
+    input(f"""Please deploy the following model {target_model_api_key}. The deployment might take up to 10 mins...""")
 
     #-------------------------
     # load llama training data
