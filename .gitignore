@@ -3,5 +3,3 @@ __pycache__/
 .ipynb_checkpoints/
 new_eval_plots.ipynb
 misc/
-results/
-benchmarks/
