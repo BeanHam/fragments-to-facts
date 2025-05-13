@@ -1,0 +1,127 @@
+## Data processing for the legal case
+
+Data retrieved from [https://huggingface.co/spaces/free-law/New_York_CAP](https://huggingface.co/spaces/free-law/New_York_CAP)
+
+Data available as part of the "Free Law" project. 
+
+#### The Caselaw Access Project
+"In collaboration with Ravel Law, Harvard Law Library digitized over 40 million U.S. court decisions consisting of 6.7 million cases from the last 360 years into a dataset that is widely accessible to use. [https://huggingface.co/datasets/free-law/Caselaw_Access_Project](https://huggingface.co/datasets/free-law/Caselaw_Access_Project)"
+
+
+#### Sorting
+Sorted via Nomic topics (from their topic modeling), filtering for sentencing / criminal possession data.
+
+#### Some counting stuff
+
+A list of common "criminal behaviors" extracted.
+```
+[('criminal sale of a controlled substance', 498),
+ ('criminal possession of a controlled substance', 392),
+ ('attempted criminal sale of a controlled substance', 128),
+ ('criminal possession of a controlled substance in the third degree', 95),
+ ('criminal sale of a controlled substance in the third degree', 70),
+ ('attempted criminal possession of a controlled substance', 51),
+ ('criminal possession of a controlled substance in the second degree', 42),
+ ('sale of cocaine', 41),
+ ('criminal possession of a controlled substance in the fourth degree', 35),
+ ('criminal possession of a controlled substance in the first degree', 31),
+ ('criminal possession of a controlled substance in the fifth degree', 30),
+ ('drug-related crimes', 25),
+ ('criminal possession of a weapon in the third degree', 23),
+ ('criminal sale of a controlled substance in the second degree', 23),
+ ('selling cocaine', 22),
+ ('conspiracy', 18),
+ ('criminal sale of a controlled substance in the fifth degree', 18),
+ ('cocaine', 18),
+ ('possession of cocaine', 18),
+ ('assault', 17),
+ ('criminal possession of a weapon', 17),
+ ('criminal possession of a controlled substance in the seventh degree', 16),
+ ('resisting arrest', 15),
+ ('bail jumping', 14),
+ ('heroin', 13),
+ ('criminal sale of a controlled substance in the first degree', 13),
+ ('plea of guilty', 13),
+ ('criminal sale of marihuana', 13),
+ ('violating probation', 12),
+ ('drug-related offenses', 12),
+ ('criminally using drug paraphernalia in the second degree', 11),
+ ('sale of heroin', 11),
+ ('absconded', 11),
+ ('probation violation', 11),
+ ('burglary', 11),
+ ('petit larceny', 10),
+ ('unlawful possession of marihuana', 10),
+ ('violation of probation', 10),
+ ('criminal possession of marihuana', 10),
+ ('failure to appear', 10),
+ ('conspiracy in the fourth degree', 10),...]
+```
+
+A list of common "identifiable information" extracted.
+```
+ [('defendant', 385),
+ ('second felony offender', 284),
+ ('Albany County', 92),
+ ('plea of guilty', 86),
+ ('Schenectady County', 78),
+ ('Sullivan County', 61),
+ ('Broome County', 59),
+ ('Ulster County', 52),
+ ('County Court', 46),
+ ('two years of postrelease supervision', 43),
+ ('Chemung County', 42),
+ ('plea agreement', 36),
+ ('three years of postrelease supervision', 34),
+ ('Peters, J.', 29),
+ ('County Court of Albany County', 28),
+ ('McCarthy, J.', 27),
+ ('Carpinello, J.', 27),
+ ('three years postrelease supervision', 26),
+ ('Mercure, J.', 26),
+ ('Columbia County', 26),
+ ('Kane, J.', 26),
+ ('Lahtinen, J.', 25),
+ ('Garry, J.', 24),
+ ('Saratoga County', 23),
+ ('St. Lawrence County', 22),
+ ('Devine, J.', 22),
+ ('Washington County', 21),
+ ('two years postrelease supervision', 21),
+ ('five years of probation', 20),
+ ('Warren County', 20),
+ ('Rensselaer County', 19),
+ ('Montgomery County', 19),
+ ('County Court of Broome County', 19),
+ ('County Court of Ulster County', 19),
+ ('Mugglin, J.', 18),
+ ('Casey, J.', 18),
+ ('Franklin County', 17),
+ ('Clinton County', 17),
+ ('Mercure, J.P.', 17),
+ ('five years in prison', 16),
+ ('County Court of Schenectady County', 15),
+ ('four years in prison', 15),
+ ('second felony drug offender', 14),
+ ('Spain, J.', 13),
+ ('Lynch, J.', 13),
+ ('Kavanagh, J.', 13),
+ ('Egan Jr.', 13),
+ ('Greene County', 13),
+ ('McCarthy, J.P.', 11),
+ ('Cortland County', 11),
+ ('Tompkins County', 11),
+ ('Cardona, P. J.', 11),
+ ('youthful offender', 11),
+ ('Stein, J.', 11),
+ ('Suffolk County', 10),
+ ('3 to 9 years', 10),
+ ('3 to 6 years', 10),
+ ('two counts', 10),
+ ('Orange County', 10),
+ ('Tioga County', 10),
+ ('two years in prison', 10),
+ ('six months in jail', 10),
+ ('1 to 3 years in prison', 10),
+ ('drug treatment program', 10),...]
+ ```
