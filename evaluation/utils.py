@@ -47,7 +47,7 @@ model_mapping = {
 
 
 
-openai.api_key = "sk-proj-qa3W3yKyqgIqIr8YXHZOT3BlbkFJNLB17J7qTKF4rrdVfLDt"
+openai.api_key = "{your_openai_key}"
 MODEL_NAME = "gpt-4o-mini"  # Or e.g. "gpt-4"
 
 def openai_prompt(message_history, text_only=True):
